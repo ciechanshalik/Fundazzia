@@ -1026,27 +1026,29 @@ async function saveContactMessageToCms(message) {
 }
 
 async function sendFormEmail(message) {
+  const formData = new FormData();
+  formData.append(
+    "_subject",
+    message.type === "signup"
+      ? "Nowe zgłoszenie ze strony Żuławscy Nobliści"
+      : "Nowa wiadomość ze strony Żuławscy Nobliści"
+  );
+  formData.append("_template", "table");
+  formData.append("_captcha", "false");
+  formData.append("Typ", message.type);
+  formData.append("Jezyk", message.lang);
+  formData.append("Imie", message.name);
+  formData.append("Kontakt", message.email);
+  formData.append("Temat", message.purpose || "-");
+  formData.append("Dziecko", message.child || "-");
+  formData.append("Wiadomosc", message.message || "-");
+
   const response = await fetch(`https://formsubmit.co/ajax/${notificationEmail}`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       Accept: "application/json"
     },
-    body: JSON.stringify({
-      _subject:
-        message.type === "signup"
-          ? "Nowe zgłoszenie ze strony Żuławscy Nobliści"
-          : "Nowa wiadomość ze strony Żuławscy Nobliści",
-      _template: "table",
-      _captcha: "false",
-      Typ: message.type,
-      Jezyk: message.lang,
-      Imie: message.name,
-      Kontakt: message.email,
-      Temat: message.purpose || "-",
-      Dziecko: message.child || "-",
-      Wiadomosc: message.message || "-"
-    })
+    body: formData
   });
 
   if (!response.ok) {
@@ -1578,14 +1580,18 @@ function App() {
     }
 
     try {
-      await Promise.all([
-        saveContactMessageToCms(payload),
-        sendFormEmail(payload)
-      ]);
+      await saveContactMessageToCms(payload);
+      try {
+        await sendFormEmail(payload);
+        setSignupStatus("Dziękujemy, zgłoszenie wysłane.");
+      } catch (error) {
+        setSignupStatus(
+          `Zgłoszenie zapisane w CMS, ale email nie wyszedł: ${error.message}`
+        );
+      }
       event.currentTarget.reset();
-      setSignupStatus("Dziękujemy, zgłoszenie wysłane.");
-    } catch {
-      setSignupStatus("Nie udało się wysłać zgłoszenia. Spróbuj ponownie.");
+    } catch (error) {
+      setSignupStatus(`Nie udało się zapisać zgłoszenia: ${error.message}`);
     }
   }
 
@@ -1612,14 +1618,18 @@ function App() {
     }
 
     try {
-      await Promise.all([
-        saveContactMessageToCms(payload),
-        sendFormEmail(payload)
-      ]);
+      await saveContactMessageToCms(payload);
+      try {
+        await sendFormEmail(payload);
+        setContactStatus("Dziękujemy, wiadomość wysłana.");
+      } catch (error) {
+        setContactStatus(
+          `Wiadomość zapisana w CMS, ale email nie wyszedł: ${error.message}`
+        );
+      }
       event.currentTarget.reset();
-      setContactStatus("Dziękujemy, wiadomość wysłana.");
-    } catch {
-      setContactStatus("Nie udało się wysłać wiadomości. Spróbuj ponownie.");
+    } catch (error) {
+      setContactStatus(`Nie udało się zapisać wiadomości: ${error.message}`);
     }
   }
 
