@@ -1558,7 +1558,8 @@ function App() {
 
   async function handleSignupSubmit(event) {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     const payload = {
       type: "signup",
       lang,
@@ -1589,7 +1590,7 @@ function App() {
           `Zgłoszenie zapisane w CMS, ale email nie wyszedł: ${error.message}`
         );
       }
-      event.currentTarget.reset();
+      form.reset();
     } catch (error) {
       setSignupStatus(`Nie udało się zapisać zgłoszenia: ${error.message}`);
     }
@@ -1597,7 +1598,8 @@ function App() {
 
   async function handleContactSubmit(event) {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     const payload = {
       type: "contact",
       lang,
@@ -1627,7 +1629,7 @@ function App() {
           `Wiadomość zapisana w CMS, ale email nie wyszedł: ${error.message}`
         );
       }
-      event.currentTarget.reset();
+      form.reset();
     } catch (error) {
       setContactStatus(`Nie udało się zapisać wiadomości: ${error.message}`);
     }
