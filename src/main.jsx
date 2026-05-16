@@ -878,6 +878,7 @@ function sortNews(posts) {
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const cmsAvailable = Boolean(supabaseUrl && supabaseAnonKey);
+const notificationEmail = "tmontanabc@gmail.com";
 
 async function cmsRequest(path, options = {}) {
   if (!cmsAvailable) return null;
@@ -1022,6 +1023,39 @@ async function saveContactMessageToCms(message) {
       created_at: new Date().toISOString()
     })
   });
+}
+
+async function sendFormEmail(message) {
+  const response = await fetch(`https://formsubmit.co/ajax/${notificationEmail}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({
+      _subject:
+        message.type === "signup"
+          ? "Nowe zgłoszenie ze strony Żuławscy Nobliści"
+          : "Nowa wiadomość ze strony Żuławscy Nobliści",
+      _template: "table",
+      _captcha: "false",
+      Typ: message.type,
+      Jezyk: message.lang,
+      Imie: message.name,
+      Kontakt: message.email,
+      Temat: message.purpose || "-",
+      Dziecko: message.child || "-",
+      Wiadomosc: message.message || "-"
+    })
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Email error ${response.status}: ${text || response.statusText}`);
+  }
+
+  const text = await response.text();
+  return text ? JSON.parse(text) : null;
 }
 
 function fileToDataUrl(file) {
@@ -1544,9 +1578,12 @@ function App() {
     }
 
     try {
-      await saveContactMessageToCms(payload);
+      await Promise.all([
+        saveContactMessageToCms(payload),
+        sendFormEmail(payload)
+      ]);
       event.currentTarget.reset();
-      setSignupStatus("Dziękujemy, zgłoszenie zapisane.");
+      setSignupStatus("Dziękujemy, zgłoszenie wysłane.");
     } catch {
       setSignupStatus("Nie udało się wysłać zgłoszenia. Spróbuj ponownie.");
     }
@@ -1575,9 +1612,12 @@ function App() {
     }
 
     try {
-      await saveContactMessageToCms(payload);
+      await Promise.all([
+        saveContactMessageToCms(payload),
+        sendFormEmail(payload)
+      ]);
       event.currentTarget.reset();
-      setContactStatus("Dziękujemy, wiadomość zapisana.");
+      setContactStatus("Dziękujemy, wiadomość wysłana.");
     } catch {
       setContactStatus("Nie udało się wysłać wiadomości. Spróbuj ponownie.");
     }
