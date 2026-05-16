@@ -211,7 +211,7 @@ const partners = [
 const adminPassword = "noblisci2026";
 
 const defaultTexts = {
-  contentVersion: "brandbook-v5",
+  contentVersion: "brandbook-v6",
   brand: "Fundacja Żuławscy Nobliści",
   navJoin: "Dołącz",
   heroEyebrow: "Talent nie zależy od kodu pocztowego",
@@ -391,7 +391,7 @@ const defaultTexts = {
 const localizedTextOverrides = {
   pl: {},
   en: {
-    contentVersion: "brandbook-v5-en",
+    contentVersion: "brandbook-v6-en",
     brand: "Żuławscy Nobliści Foundation",
     navJoin: "Join",
     heroEyebrow: "Talent does not depend on a postcode",
@@ -565,7 +565,7 @@ const localizedTextOverrides = {
     contactButton: "Send message"
   },
   de: {
-    contentVersion: "brandbook-v5-de",
+    contentVersion: "brandbook-v6-de",
     brand: "Stiftung Żuławscy Nobliści",
     navJoin: "Mitmachen",
     heroEyebrow: "Talent hängt nicht von der Postleitzahl ab",
@@ -742,6 +742,33 @@ const localizedTextOverrides = {
 
 function defaultTextsFor(lang) {
   return { ...defaultTexts, ...(localizedTextOverrides[lang] || {}) };
+}
+
+function normalizeCmsTexts(lang, remoteTexts) {
+  if (!remoteTexts) return null;
+
+  const defaults = defaultTextsFor(lang);
+  const oldPackagePrices = new Set([
+    "7 000 zł",
+    "4 500 zł",
+    "2 000 zł",
+    "PLN 7,000",
+    "PLN 4,500",
+    "PLN 2,000",
+    "7.000 PLN",
+    "4.500 PLN",
+    "2.000 PLN"
+  ]);
+  const normalized = { ...remoteTexts };
+
+  ["package1Price", "package2Price", "package3Price"].forEach((key) => {
+    if (oldPackagePrices.has(normalized[key])) {
+      normalized[key] = defaults[key];
+    }
+  });
+
+  normalized.contentVersion = defaults.contentVersion;
+  return normalized;
 }
 
 const uiText = {
@@ -1260,7 +1287,13 @@ function App() {
         ]);
 
         if (!isActive) return;
-        if (remoteTexts) setTexts({ ...defaultTextsFor(lang), ...remoteTexts });
+        if (remoteTexts) {
+          const normalizedTexts = normalizeCmsTexts(lang, remoteTexts);
+          setTexts({ ...defaultTextsFor(lang), ...normalizedTexts });
+          if (normalizedTexts.contentVersion !== remoteTexts.contentVersion) {
+            saveTextsToCms(lang, normalizedTexts).catch(() => {});
+          }
+        }
         if (Array.isArray(remoteNews)) setNews(remoteNews);
         setCmsStatus("CMS Supabase aktywny");
       } catch (error) {
@@ -1541,7 +1574,13 @@ function App() {
       ]);
       const snapshot = await loadCmsSnapshot(lang);
 
-      if (remoteTexts) setTexts({ ...defaultTextsFor(lang), ...remoteTexts });
+      if (remoteTexts) {
+        const normalizedTexts = normalizeCmsTexts(lang, remoteTexts);
+        setTexts({ ...defaultTextsFor(lang), ...normalizedTexts });
+        if (normalizedTexts.contentVersion !== remoteTexts.contentVersion) {
+          saveTextsToCms(lang, normalizedTexts).catch(() => {});
+        }
+      }
       if (remoteNews) setNews(remoteNews);
       if (remoteHidden) {
         setSectionHidden({
