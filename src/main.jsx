@@ -1232,7 +1232,7 @@ function App() {
 
         if (!isActive) return;
         if (remoteTexts) setTexts({ ...defaultTextsFor(lang), ...remoteTexts });
-        if (remoteNews?.length) setNews(remoteNews);
+        if (Array.isArray(remoteNews)) setNews(remoteNews);
         setCmsStatus("CMS Supabase aktywny");
       } catch (error) {
         if (isActive) {
