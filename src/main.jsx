@@ -992,6 +992,16 @@ async function uploadNewsImageToCms(file) {
   return `${supabaseUrl}/storage/v1/object/public/news-images/${path}`;
 }
 
+async function saveContactMessageToCms(message) {
+  return cmsRequest("/rest/v1/contact_messages", {
+    method: "POST",
+    body: JSON.stringify({
+      ...message,
+      created_at: new Date().toISOString()
+    })
+  });
+}
+
 function fileToDataUrl(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -1027,6 +1037,8 @@ function App() {
   const [cmsReady, setCmsReady] = React.useState(!cmsAvailable);
   const [sectionsReady, setSectionsReady] = React.useState(!cmsAvailable);
   const [isUploadingImage, setIsUploadingImage] = React.useState(false);
+  const [signupStatus, setSignupStatus] = React.useState("");
+  const [contactStatus, setContactStatus] = React.useState("");
   const [cmsStatus, setCmsStatus] = React.useState(
     cmsAvailable ? "CMS Supabase aktywny" : "Tryb lokalny"
   );
@@ -1387,6 +1399,69 @@ function App() {
       setCmsStatus("Aktualność usunięta z CMS");
     } catch {
       setCmsStatus("Nie udało się usunąć aktualności z CMS");
+    }
+  }
+
+  async function handleSignupSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const payload = {
+      type: "signup",
+      lang,
+      name: formData.get("name")?.toString() || "",
+      email: formData.get("contact")?.toString() || "",
+      purpose: formData.get("course")?.toString() || "",
+      child: formData.get("child")?.toString() || "",
+      message: formData.get("message")?.toString() || ""
+    };
+
+    if (!payload.name || !payload.email) {
+      setSignupStatus("Uzupełnij imię i kontakt.");
+      return;
+    }
+
+    if (!cmsAvailable) {
+      setSignupStatus("Formularz wymaga aktywnego CMS Supabase.");
+      return;
+    }
+
+    try {
+      await saveContactMessageToCms(payload);
+      event.currentTarget.reset();
+      setSignupStatus("Dziękujemy, zgłoszenie zapisane.");
+    } catch {
+      setSignupStatus("Nie udało się wysłać zgłoszenia. Spróbuj ponownie.");
+    }
+  }
+
+  async function handleContactSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const payload = {
+      type: "contact",
+      lang,
+      name: formData.get("name")?.toString() || "",
+      email: formData.get("email")?.toString() || "",
+      purpose: formData.get("purpose")?.toString() || "",
+      message: formData.get("message")?.toString() || ""
+    };
+
+    if (!payload.name || !payload.email || !payload.message) {
+      setContactStatus("Uzupełnij imię, email i wiadomość.");
+      return;
+    }
+
+    if (!cmsAvailable) {
+      setContactStatus("Formularz wymaga aktywnego CMS Supabase.");
+      return;
+    }
+
+    try {
+      await saveContactMessageToCms(payload);
+      event.currentTarget.reset();
+      setContactStatus("Dziękujemy, wiadomość zapisana.");
+    } catch {
+      setContactStatus("Nie udało się wysłać wiadomości. Spróbuj ponownie.");
     }
   }
 
@@ -2307,6 +2382,7 @@ function App() {
             </motion.div>
             <motion.form
               {...fadeUp(0.08)}
+              onSubmit={handleSignupSubmit}
               className="rounded-[8px] border border-forest/10 bg-white/78 p-5 shadow-panel sm:p-7"
             >
               <h3 className="font-serif text-4xl font-bold leading-tight">
@@ -2316,6 +2392,7 @@ function App() {
                 <label className="block text-sm font-bold text-ink/70">
                   {t("signupNameLabel")}
                   <input
+                    name="name"
                     placeholder={t("signupNamePlaceholder")}
                     className="mt-2 w-full rounded-[8px] border border-ink/10 bg-porcelain px-4 py-4 text-base text-ink outline-none transition focus:border-gold"
                   />
@@ -2323,6 +2400,7 @@ function App() {
                 <label className="block text-sm font-bold text-ink/70">
                   {t("signupPhoneLabel")}
                   <input
+                    name="contact"
                     placeholder={t("signupPhonePlaceholder")}
                     className="mt-2 w-full rounded-[8px] border border-ink/10 bg-porcelain px-4 py-4 text-base text-ink outline-none transition focus:border-gold"
                   />
@@ -2330,6 +2408,7 @@ function App() {
                 <label className="block text-sm font-bold text-ink/70">
                   {t("signupCourseLabel")}
                   <select
+                    name="course"
                     defaultValue=""
                     className="mt-2 w-full rounded-[8px] border border-ink/10 bg-porcelain px-4 py-4 text-base text-ink outline-none transition focus:border-gold"
                   >
@@ -2344,6 +2423,7 @@ function App() {
                 <label className="block text-sm font-bold text-ink/70">
                   {t("signupChildLabel")}
                   <input
+                    name="child"
                     placeholder={t("signupChildPlaceholder")}
                     className="mt-2 w-full rounded-[8px] border border-ink/10 bg-porcelain px-4 py-4 text-base text-ink outline-none transition focus:border-gold"
                   />
@@ -2351,6 +2431,7 @@ function App() {
                 <label className="block text-sm font-bold text-ink/70">
                   {t("signupMessageLabel")}
                   <textarea
+                    name="message"
                     placeholder={t("signupMessagePlaceholder")}
                     rows="4"
                     className="mt-2 w-full rounded-[8px] border border-ink/10 bg-porcelain px-4 py-4 text-base text-ink outline-none transition focus:border-gold"
@@ -2358,12 +2439,15 @@ function App() {
                 </label>
               </div>
               <button
-                type="button"
+                type="submit"
                 className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-forest px-6 py-4 text-sm font-black text-cream transition hover:-translate-y-1 hover:bg-ink"
               >
                 {t("signupButton")}
                 <ArrowUpRight size={18} />
               </button>
+              {signupStatus && (
+                <p className="mt-4 text-sm font-bold text-forest">{signupStatus}</p>
+              )}
             </motion.form>
           </div>
         </section>
@@ -2695,18 +2779,26 @@ function App() {
               </p>
             </div>
           </motion.div>
-          <motion.form {...fadeUp(0.08)} className="rounded-[8px] border border-cream/10 bg-cream/[0.06] p-5 backdrop-blur-xl">
+          <motion.form
+            {...fadeUp(0.08)}
+            onSubmit={handleContactSubmit}
+            className="rounded-[8px] border border-cream/10 bg-cream/[0.06] p-5 backdrop-blur-xl"
+          >
             <label className="field">
               {t("contactNameLabel")}
-              <input placeholder={t("contactNamePlaceholder")} />
+              <input name="name" placeholder={t("contactNamePlaceholder")} />
             </label>
             <label className="field">
               {t("contactEmailLabel")}
-              <input placeholder={t("contactEmailPlaceholder")} type="email" />
+              <input
+                name="email"
+                placeholder={t("contactEmailPlaceholder")}
+                type="email"
+              />
             </label>
             <label className="field">
               {t("contactPurposeLabel")}
-              <select defaultValue="">
+              <select name="purpose" defaultValue="">
                 <option value="" disabled>
                   {t("contactPurposeLabel")}
                 </option>
@@ -2718,15 +2810,22 @@ function App() {
             </label>
             <label className="field">
               {t("contactMessageLabel")}
-              <textarea placeholder={t("contactMessagePlaceholder")} rows="5" />
+              <textarea
+                name="message"
+                placeholder={t("contactMessagePlaceholder")}
+                rows="5"
+              />
             </label>
             <button
-              type="button"
+              type="submit"
               className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gold px-6 py-4 text-sm font-black text-ink transition hover:-translate-y-1 hover:bg-cream"
             >
               {t("contactButton")}
               <ArrowUpRight size={18} />
             </button>
+            {contactStatus && (
+              <p className="mt-4 text-sm font-bold text-gold">{contactStatus}</p>
+            )}
           </motion.form>
         </div>
       </section>
