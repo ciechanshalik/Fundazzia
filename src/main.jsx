@@ -372,7 +372,7 @@ const defaultTexts = {
   package3Item4: "zaproszenie na wybrane działanie",
   contactEyebrow: "Kontakt",
   contactTitle: "Masz energię, pomysł albo partnerstwo? Zacznijmy rozmowę.",
-  contactEmail: "kontakt@zulawscynoblisci.pl",
+  contactEmail: "tmontanabc@gmail.com",
   contactPlace: "Żuławy Wiślane / działania w Polsce i Europie",
   contactNameLabel: "Imię",
   contactNamePlaceholder: "Jak mamy się do Ciebie zwracać?",
@@ -766,6 +766,10 @@ function normalizeCmsTexts(lang, remoteTexts) {
       normalized[key] = defaults[key];
     }
   });
+
+  if (normalized.contactEmail === "kontakt@zulawscynoblisci.pl") {
+    normalized.contactEmail = defaults.contactEmail;
+  }
 
   normalized.contentVersion = defaults.contentVersion;
   return normalized;
