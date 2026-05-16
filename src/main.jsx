@@ -875,6 +875,132 @@ function sortNews(posts) {
   return [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
 }
 
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const cmsAvailable = Boolean(supabaseUrl && supabaseAnonKey);
+
+async function cmsRequest(path, options = {}) {
+  if (!cmsAvailable) return null;
+
+  const response = await fetch(`${supabaseUrl}${path}`, {
+    ...options,
+    headers: {
+      apikey: supabaseAnonKey,
+      Authorization: `Bearer ${supabaseAnonKey}`,
+      "Content-Type": "application/json",
+      ...(options.headers || {})
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`CMS error ${response.status}`);
+  }
+
+  if (response.status === 204) return null;
+  return response.json();
+}
+
+async function loadTextsFromCms(lang) {
+  const rows = await cmsRequest(
+    `/rest/v1/site_texts?lang=eq.${lang}&select=content&limit=1`
+  );
+
+  return rows?.[0]?.content || null;
+}
+
+async function saveTextsToCms(lang, content) {
+  return cmsRequest("/rest/v1/site_texts?on_conflict=lang", {
+    method: "POST",
+    headers: { Prefer: "resolution=merge-duplicates" },
+    body: JSON.stringify({
+      lang,
+      content,
+      updated_at: new Date().toISOString()
+    })
+  });
+}
+
+async function loadNewsFromCms(lang) {
+  const rows = await cmsRequest(
+    `/rest/v1/news_posts?lang=eq.${lang}&select=*&order=date.desc`
+  );
+
+  return rows?.map(({ lang: _lang, created_at: _createdAt, ...post }) => post) || null;
+}
+
+async function saveNewsPostToCms(lang, post) {
+  return cmsRequest("/rest/v1/news_posts?on_conflict=id", {
+    method: "POST",
+    headers: { Prefer: "resolution=merge-duplicates" },
+    body: JSON.stringify({
+      ...post,
+      lang,
+      created_at: new Date().toISOString()
+    })
+  });
+}
+
+async function deleteNewsPostFromCms(postId) {
+  return cmsRequest(`/rest/v1/news_posts?id=eq.${postId}`, {
+    method: "DELETE"
+  });
+}
+
+async function loadSectionHiddenFromCms() {
+  const rows = await cmsRequest(
+    "/rest/v1/section_visibility?id=eq.global&select=content&limit=1"
+  );
+
+  return rows?.[0]?.content || null;
+}
+
+async function saveSectionHiddenToCms(content) {
+  return cmsRequest("/rest/v1/section_visibility?on_conflict=id", {
+    method: "POST",
+    headers: { Prefer: "resolution=merge-duplicates" },
+    body: JSON.stringify({
+      id: "global",
+      content,
+      updated_at: new Date().toISOString()
+    })
+  });
+}
+
+async function uploadNewsImageToCms(file) {
+  if (!cmsAvailable) return null;
+
+  const extension = file.name.split(".").pop() || "jpg";
+  const safeName = `${Date.now()}-${Math.random()
+    .toString(36)
+    .slice(2)}.${extension}`;
+  const path = `news/${safeName}`;
+  const response = await fetch(`${supabaseUrl}/storage/v1/object/news-images/${path}`, {
+    method: "POST",
+    headers: {
+      apikey: supabaseAnonKey,
+      Authorization: `Bearer ${supabaseAnonKey}`,
+      "Content-Type": file.type || "application/octet-stream",
+      "x-upsert": "true"
+    },
+    body: file
+  });
+
+  if (!response.ok) {
+    throw new Error(`Upload error ${response.status}`);
+  }
+
+  return `${supabaseUrl}/storage/v1/object/public/news-images/${path}`;
+}
+
+function fileToDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
 function fadeUp(delay = 0) {
   return {
     initial: { opacity: 0, y: 18 },
@@ -898,6 +1024,12 @@ function App() {
   );
   const [panelTab, setPanelTab] = React.useState("news");
   const [activeNews, setActiveNews] = React.useState(0);
+  const [cmsReady, setCmsReady] = React.useState(!cmsAvailable);
+  const [sectionsReady, setSectionsReady] = React.useState(!cmsAvailable);
+  const [isUploadingImage, setIsUploadingImage] = React.useState(false);
+  const [cmsStatus, setCmsStatus] = React.useState(
+    cmsAvailable ? "CMS Supabase aktywny" : "Tryb lokalny"
+  );
   const [isPanelOpen, setIsPanelOpen] = React.useState(
     window.location.hash === "#panel"
   );
@@ -1037,11 +1169,46 @@ function App() {
   ];
 
   React.useEffect(() => {
+    let isActive = true;
+
     window.localStorage.setItem("zulawscy-lang", lang);
     document.documentElement.lang = lang;
-    setTexts(loadTexts(lang));
-    setNews(loadNews(lang));
+    setCmsReady(false);
+    const localTexts = loadTexts(lang);
+    const localNews = loadNews(lang);
+
+    setTexts(localTexts);
+    setNews(localNews);
     setActiveNews(0);
+
+    async function loadCmsContent() {
+      if (!cmsAvailable) {
+        if (isActive) setCmsReady(true);
+        return;
+      }
+
+      try {
+        const [remoteTexts, remoteNews] = await Promise.all([
+          loadTextsFromCms(lang),
+          loadNewsFromCms(lang)
+        ]);
+
+        if (!isActive) return;
+        if (remoteTexts) setTexts({ ...defaultTextsFor(lang), ...remoteTexts });
+        if (remoteNews?.length) setNews(remoteNews);
+        setCmsStatus("CMS Supabase aktywny");
+      } catch {
+        if (isActive) setCmsStatus("CMS niedostępny, używam kopii lokalnej");
+      } finally {
+        if (isActive) setCmsReady(true);
+      }
+    }
+
+    loadCmsContent();
+
+    return () => {
+      isActive = false;
+    };
   }, [lang]);
 
   React.useEffect(() => {
@@ -1050,11 +1217,56 @@ function App() {
 
   React.useEffect(() => {
     window.localStorage.setItem(`zulawscy-texts-${lang}`, JSON.stringify(texts));
-  }, [texts, lang]);
+    if (!cmsAvailable || !cmsReady) return;
+
+    const timer = window.setTimeout(() => {
+      saveTextsToCms(lang, texts).catch(() =>
+        setCmsStatus("Nie udało się zapisać tekstów w CMS")
+      );
+    }, 600);
+
+    return () => window.clearTimeout(timer);
+  }, [texts, lang, cmsReady]);
 
   React.useEffect(() => {
     window.localStorage.setItem("zulawscy-hidden-sections", JSON.stringify(sectionHidden));
-  }, [sectionHidden]);
+    if (!cmsAvailable || !sectionsReady) return;
+    saveSectionHiddenToCms(sectionHidden).catch(() =>
+      setCmsStatus("Nie udało się zapisać widoczności sekcji w CMS")
+    );
+  }, [sectionHidden, sectionsReady]);
+
+  React.useEffect(() => {
+    let isActive = true;
+
+    async function loadCmsSections() {
+      if (!cmsAvailable) {
+        setSectionsReady(true);
+        return;
+      }
+
+      try {
+        const remoteHidden = await loadSectionHiddenFromCms();
+        if (isActive && remoteHidden) {
+          setSectionHidden({
+            ...defaultHiddenSections,
+            ...remoteHidden,
+            __version: sectionVisibilityVersion
+          });
+        }
+      } catch {
+        if (isActive) setCmsStatus("CMS niedostępny, widoczność sekcji lokalna");
+      } finally {
+        if (isActive) setSectionsReady(true);
+      }
+    }
+
+    loadCmsSections();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
 
   React.useEffect(() => {
     let frame = 0;
@@ -1107,7 +1319,7 @@ function App() {
     setLoginError("Nieprawidłowe hasło.");
   }
 
-  function handlePostSubmit(event) {
+  async function handlePostSubmit(event) {
     event.preventDefault();
     if (!postDraft.title.trim() || !postDraft.excerpt.trim()) return;
 
@@ -1124,6 +1336,14 @@ function App() {
     };
 
     setNews((posts) => sortNews([nextPost, ...posts]));
+    if (cmsAvailable) {
+      try {
+        await saveNewsPostToCms(lang, nextPost);
+        setCmsStatus("Aktualność zapisana w CMS");
+      } catch {
+        setCmsStatus("Nie udało się zapisać aktualności w CMS");
+      }
+    }
     setPostDraft({
       title: "",
       tag: "",
@@ -1135,18 +1355,39 @@ function App() {
     setActiveNews(0);
   }
 
-  function handleImageUpload(event) {
+  async function handleImageUpload(event) {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = () => {
+    setIsUploadingImage(true);
+    try {
+      const image = cmsAvailable
+        ? await uploadNewsImageToCms(file)
+        : await fileToDataUrl(file);
+
       setPostDraft((draft) => ({
         ...draft,
-        image: typeof reader.result === "string" ? reader.result : draft.image
+        image: typeof image === "string" ? image : draft.image
       }));
-    };
-    reader.readAsDataURL(file);
+      setCmsStatus(cmsAvailable ? "Zdjęcie zapisane w CMS" : "Zdjęcie zapisane lokalnie");
+    } catch {
+      setCmsStatus("Nie udało się przesłać zdjęcia");
+    } finally {
+      setIsUploadingImage(false);
+      event.target.value = "";
+    }
+  }
+
+  async function handleNewsDelete(postId) {
+    setNews((posts) => posts.filter((item) => item.id !== postId));
+    if (!cmsAvailable) return;
+
+    try {
+      await deleteNewsPostFromCms(postId);
+      setCmsStatus("Aktualność usunięta z CMS");
+    } catch {
+      setCmsStatus("Nie udało się usunąć aktualności z CMS");
+    }
   }
 
   function closePanel() {
@@ -1387,6 +1628,11 @@ function App() {
                     Wyloguj
                   </button>
                 </div>
+                <div className="border-b border-ink/10 bg-porcelain px-5 py-3">
+                  <p className="text-xs font-black uppercase tracking-[0.14em] text-forest/65">
+                    {cmsStatus}
+                  </p>
+                </div>
 
                 {panelTab === "news" ? (
                   <div className="grid gap-px bg-ink/10 lg:grid-cols-[.9fr_1.1fr]">
@@ -1466,12 +1712,14 @@ function App() {
                             type="file"
                             accept="image/*"
                             onChange={handleImageUpload}
+                            disabled={isUploadingImage}
                             className="mt-2 block w-full cursor-pointer rounded-[8px] border border-dashed border-forest/25 bg-porcelain px-4 py-4 text-sm font-bold text-ink/60 file:mr-4 file:rounded-full file:border-0 file:bg-forest file:px-4 file:py-2 file:text-sm file:font-black file:text-cream"
                           />
                         </label>
                         <p className="mt-2 text-xs font-bold leading-5 text-ink/45">
-                          Możesz wkleić link albo wybrać plik z pulpitu. Po wyborze
-                          zdjęcie zapisze się w tym wpisie.
+                          {isUploadingImage
+                            ? "Przesyłam zdjęcie..."
+                            : "Możesz wkleić link albo wybrać plik z pulpitu. Po wyborze zdjęcie zapisze się w tym wpisie."}
                         </p>
                         {postDraft.image && (
                           <div className="mt-4 overflow-hidden rounded-[8px] border border-ink/10">
@@ -1548,11 +1796,7 @@ function App() {
                               <button
                                 type="button"
                                 aria-label={`Usuń ${post.title}`}
-                                onClick={() =>
-                                  setNews((posts) =>
-                                    posts.filter((item) => item.id !== post.id)
-                                  )
-                                }
+                                onClick={() => handleNewsDelete(post.id)}
                                 className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ink text-cream transition hover:bg-ember"
                               >
                                 <Trash2 size={17} />

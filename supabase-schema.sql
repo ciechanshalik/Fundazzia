@@ -1,0 +1,96 @@
+create table if not exists public.site_texts (
+  lang text primary key,
+  content jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.news_posts (
+  id text primary key,
+  lang text not null,
+  title text not null,
+  tag text,
+  date text,
+  image text,
+  link text,
+  excerpt text not null,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists news_posts_lang_date_idx
+  on public.news_posts (lang, date desc);
+
+create table if not exists public.section_visibility (
+  id text primary key,
+  content jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.site_texts enable row level security;
+alter table public.news_posts enable row level security;
+alter table public.section_visibility enable row level security;
+
+drop policy if exists "Public read site texts" on public.site_texts;
+create policy "Public read site texts"
+on public.site_texts for select
+to anon
+using (true);
+
+drop policy if exists "Public write site texts" on public.site_texts;
+create policy "Public write site texts"
+on public.site_texts for all
+to anon
+using (true)
+with check (true);
+
+drop policy if exists "Public read news posts" on public.news_posts;
+create policy "Public read news posts"
+on public.news_posts for select
+to anon
+using (true);
+
+drop policy if exists "Public write news posts" on public.news_posts;
+create policy "Public write news posts"
+on public.news_posts for all
+to anon
+using (true)
+with check (true);
+
+drop policy if exists "Public read section visibility" on public.section_visibility;
+create policy "Public read section visibility"
+on public.section_visibility for select
+to anon
+using (true);
+
+drop policy if exists "Public write section visibility" on public.section_visibility;
+create policy "Public write section visibility"
+on public.section_visibility for all
+to anon
+using (true)
+with check (true);
+
+insert into public.section_visibility (id, content)
+values ('global', '{"__version":"sections-v2"}'::jsonb)
+on conflict (id) do nothing;
+
+insert into storage.buckets (id, name, public)
+values ('news-images', 'news-images', true)
+on conflict (id) do nothing;
+
+drop policy if exists "Public read news images" on storage.objects;
+create policy "Public read news images"
+on storage.objects for select
+to anon
+using (bucket_id = 'news-images');
+
+drop policy if exists "Public upload news images" on storage.objects;
+create policy "Public upload news images"
+on storage.objects for insert
+to anon
+with check (bucket_id = 'news-images');
+
+drop policy if exists "Public update news images" on storage.objects;
+create policy "Public update news images"
+on storage.objects for update
+to anon
+using (bucket_id = 'news-images')
+with check (bucket_id = 'news-images');
