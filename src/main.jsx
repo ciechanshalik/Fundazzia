@@ -898,7 +898,9 @@ async function cmsRequest(path, options = {}) {
   }
 
   if (response.status === 204) return null;
-  return response.json();
+
+  const text = await response.text();
+  return text ? JSON.parse(text) : null;
 }
 
 async function loadTextsFromCms(lang) {
