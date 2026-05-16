@@ -1043,6 +1043,7 @@ function App() {
   const [signupStatus, setSignupStatus] = React.useState("");
   const [contactStatus, setContactStatus] = React.useState("");
   const [isTestingCms, setIsTestingCms] = React.useState(false);
+  const [isPublishingCms, setIsPublishingCms] = React.useState(false);
   const [cmsStatus, setCmsStatus] = React.useState(
     cmsAvailable ? "CMS Supabase aktywny" : "Tryb lokalny"
   );
@@ -1437,6 +1438,29 @@ function App() {
     }
   }
 
+  async function handlePublishCurrentToCms() {
+    if (!cmsAvailable) {
+      setCmsStatus("Publikacja: brak zmiennych Supabase w tym deployu");
+      return;
+    }
+
+    setIsPublishingCms(true);
+    setCmsStatus("Publikuję aktualną wersję do CMS...");
+
+    try {
+      await saveTextsToCms(lang, texts);
+      await saveSectionHiddenToCms(sectionHidden);
+      await Promise.all(news.map((post) => saveNewsPostToCms(lang, post)));
+      setCmsStatus(
+        `Opublikowano do CMS: teksty, widoczność sekcji i aktualności dla ${lang.toUpperCase()}`
+      );
+    } catch (error) {
+      setCmsStatus(`Nie udało się opublikować do CMS: ${error.message}`);
+    } finally {
+      setIsPublishingCms(false);
+    }
+  }
+
   async function handleSignupSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -1742,14 +1766,24 @@ function App() {
                   <p className="text-xs font-black uppercase tracking-[0.14em] text-forest/65 md:max-w-3xl">
                     {cmsStatus}
                   </p>
-                  <button
-                    type="button"
-                    onClick={handleCmsDiagnostic}
-                    disabled={isTestingCms}
-                    className="inline-flex w-fit items-center justify-center rounded-full bg-ink px-4 py-2 text-xs font-black text-cream transition hover:bg-forest disabled:cursor-wait disabled:opacity-60"
-                  >
-                    {isTestingCms ? "Testuję..." : "Test CMS"}
-                  </button>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      onClick={handlePublishCurrentToCms}
+                      disabled={isPublishingCms}
+                      className="inline-flex w-fit items-center justify-center rounded-full bg-forest px-4 py-2 text-xs font-black text-cream transition hover:bg-ink disabled:cursor-wait disabled:opacity-60"
+                    >
+                      {isPublishingCms ? "Publikuję..." : "Opublikuj do CMS"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleCmsDiagnostic}
+                      disabled={isTestingCms}
+                      className="inline-flex w-fit items-center justify-center rounded-full bg-ink px-4 py-2 text-xs font-black text-cream transition hover:bg-forest disabled:cursor-wait disabled:opacity-60"
+                    >
+                      {isTestingCms ? "Testuję..." : "Test CMS"}
+                    </button>
+                  </div>
                 </div>
 
                 {panelTab === "news" ? (
