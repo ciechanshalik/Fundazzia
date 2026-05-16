@@ -957,6 +957,25 @@ async function loadSectionHiddenFromCms() {
   return rows?.[0]?.content || null;
 }
 
+async function loadCmsSnapshot(lang) {
+  const [remoteTexts, remoteNews, remoteHidden] = await Promise.all([
+    loadTextsFromCms(lang),
+    loadNewsFromCms(lang),
+    loadSectionHiddenFromCms()
+  ]);
+
+  return {
+    textKeys: remoteTexts ? Object.keys(remoteTexts).length : 0,
+    hasHeroTitle: Boolean(remoteTexts?.heroTitle),
+    newsCount: remoteNews?.length || 0,
+    hiddenSections: remoteHidden
+      ? Object.entries(remoteHidden)
+          .filter(([key, value]) => key !== "__version" && Boolean(value))
+          .map(([key]) => key)
+      : []
+  };
+}
+
 async function saveSectionHiddenToCms(content) {
   return cmsRequest("/rest/v1/section_visibility?on_conflict=id", {
     method: "POST",
@@ -1044,6 +1063,7 @@ function App() {
   const [contactStatus, setContactStatus] = React.useState("");
   const [isTestingCms, setIsTestingCms] = React.useState(false);
   const [isPublishingCms, setIsPublishingCms] = React.useState(false);
+  const [isRefreshingCms, setIsRefreshingCms] = React.useState(false);
   const [cmsStatus, setCmsStatus] = React.useState(
     cmsAvailable ? "CMS Supabase aktywny" : "Tryb lokalny"
   );
@@ -1461,6 +1481,45 @@ function App() {
     }
   }
 
+  async function handleRefreshFromCms() {
+    if (!cmsAvailable) {
+      setCmsStatus("Odświeżanie: brak zmiennych Supabase w tym deployu");
+      return;
+    }
+
+    setIsRefreshingCms(true);
+    setCmsStatus("Pobieram aktualną wersję z CMS...");
+
+    try {
+      const [remoteTexts, remoteNews, remoteHidden] = await Promise.all([
+        loadTextsFromCms(lang),
+        loadNewsFromCms(lang),
+        loadSectionHiddenFromCms()
+      ]);
+      const snapshot = await loadCmsSnapshot(lang);
+
+      if (remoteTexts) setTexts({ ...defaultTextsFor(lang), ...remoteTexts });
+      if (remoteNews) setNews(remoteNews);
+      if (remoteHidden) {
+        setSectionHidden({
+          ...defaultHiddenSections,
+          ...remoteHidden,
+          __version: sectionVisibilityVersion
+        });
+      }
+
+      setCmsStatus(
+        `CMS snapshot ${lang.toUpperCase()}: teksty ${snapshot.textKeys}, aktualności ${snapshot.newsCount}, ukryte: ${
+          snapshot.hiddenSections.join(", ") || "brak"
+        }`
+      );
+    } catch (error) {
+      setCmsStatus(`Nie udało się pobrać snapshotu CMS: ${error.message}`);
+    } finally {
+      setIsRefreshingCms(false);
+    }
+  }
+
   async function handleSignupSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -1774,6 +1833,14 @@ function App() {
                       className="inline-flex w-fit items-center justify-center rounded-full bg-forest px-4 py-2 text-xs font-black text-cream transition hover:bg-ink disabled:cursor-wait disabled:opacity-60"
                     >
                       {isPublishingCms ? "Publikuję..." : "Opublikuj do CMS"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleRefreshFromCms}
+                      disabled={isRefreshingCms}
+                      className="inline-flex w-fit items-center justify-center rounded-full border border-ink/10 px-4 py-2 text-xs font-black text-ink/65 transition hover:bg-white hover:text-ink disabled:cursor-wait disabled:opacity-60"
+                    >
+                      {isRefreshingCms ? "Pobieram..." : "Pokaż CMS"}
                     </button>
                     <button
                       type="button"
