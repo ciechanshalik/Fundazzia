@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  background: #07120f;
+}
+
+body {
+  margin: 0;
+  font-family: Montserrat, ui-sans-serif, system-ui;
+  text-rendering: geometricPrecision;
+}
+
+main > section:not(#top) {
+  content-visibility: auto;
+  contain-intrinsic-size: 780px;
+}
+
+::selection {
+  background: #c69a48;
+  color: #07120f;
+}
+
+.eyebrow {
+  @apply mb-4 text-xs font-black uppercase tracking-[0.22em] text-forest/70;
+}
+
+.section-title {
+  @apply font-serif text-[clamp(2.15rem,5.6vw,5.2rem)] font-bold leading-[0.95] tracking-normal;
+}
+
+.lead {
+  @apply text-xl leading-8 sm:text-2xl sm:leading-9;
+  color: rgb(7 18 15 / 0.66);
+}
+
+.field {
+  @apply mb-4 block text-sm font-bold;
+  color: rgb(247 240 228 / 0.72);
+}
+
+.field input,
+.field textarea,
+.field select {
+  @apply mt-2 w-full rounded-[8px] border px-4 py-4 text-base text-cream outline-none transition focus:border-gold;
+  background: rgb(7 18 15 / 0.55);
+  border-color: rgb(247 240 228 / 0.12);
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: rgb(247 240 228 / 0.32);
+}
+
+.field select {
+  color: rgb(247 240 228 / 0.9);
+}
+
+.marquee-track {
+  animation: marquee 28s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .marquee-track {
+    animation: none !important;
+  }
+}
