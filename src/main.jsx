@@ -878,7 +878,6 @@ function sortNews(posts) {
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const cmsAvailable = Boolean(supabaseUrl && supabaseAnonKey);
-const notificationEmail = "tmontanabc@gmail.com";
 
 async function cmsRequest(path, options = {}) {
   if (!cmsAvailable) return null;
@@ -1026,29 +1025,13 @@ async function saveContactMessageToCms(message) {
 }
 
 async function sendFormEmail(message) {
-  const formData = new FormData();
-  formData.append(
-    "_subject",
-    message.type === "signup"
-      ? "Nowe zgłoszenie ze strony Żuławscy Nobliści"
-      : "Nowa wiadomość ze strony Żuławscy Nobliści"
-  );
-  formData.append("_template", "table");
-  formData.append("_captcha", "false");
-  formData.append("Typ", message.type);
-  formData.append("Jezyk", message.lang);
-  formData.append("Imie", message.name);
-  formData.append("Kontakt", message.email);
-  formData.append("Temat", message.purpose || "-");
-  formData.append("Dziecko", message.child || "-");
-  formData.append("Wiadomosc", message.message || "-");
-
-  const response = await fetch(`https://formsubmit.co/ajax/${notificationEmail}`, {
+  const response = await fetch("/api/send-form-email", {
     method: "POST",
     headers: {
+      "Content-Type": "application/json",
       Accept: "application/json"
     },
-    body: formData
+    body: JSON.stringify(message)
   });
 
   if (!response.ok) {
