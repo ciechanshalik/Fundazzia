@@ -893,7 +893,8 @@ async function cmsRequest(path, options = {}) {
   });
 
   if (!response.ok) {
-    throw new Error(`CMS error ${response.status}`);
+    const message = await response.text();
+    throw new Error(`CMS error ${response.status}: ${message || response.statusText}`);
   }
 
   if (response.status === 204) return null;
@@ -1039,6 +1040,7 @@ function App() {
   const [isUploadingImage, setIsUploadingImage] = React.useState(false);
   const [signupStatus, setSignupStatus] = React.useState("");
   const [contactStatus, setContactStatus] = React.useState("");
+  const [isTestingCms, setIsTestingCms] = React.useState(false);
   const [cmsStatus, setCmsStatus] = React.useState(
     cmsAvailable ? "CMS Supabase aktywny" : "Tryb lokalny"
   );
@@ -1209,8 +1211,10 @@ function App() {
         if (remoteTexts) setTexts({ ...defaultTextsFor(lang), ...remoteTexts });
         if (remoteNews?.length) setNews(remoteNews);
         setCmsStatus("CMS Supabase aktywny");
-      } catch {
-        if (isActive) setCmsStatus("CMS niedostępny, używam kopii lokalnej");
+      } catch (error) {
+        if (isActive) {
+          setCmsStatus(`CMS niedostępny: ${error.message}`);
+        }
       } finally {
         if (isActive) setCmsReady(true);
       }
@@ -1232,8 +1236,8 @@ function App() {
     if (!cmsAvailable || !cmsReady) return;
 
     const timer = window.setTimeout(() => {
-      saveTextsToCms(lang, texts).catch(() =>
-        setCmsStatus("Nie udało się zapisać tekstów w CMS")
+      saveTextsToCms(lang, texts).catch((error) =>
+        setCmsStatus(`Nie udało się zapisać tekstów w CMS: ${error.message}`)
       );
     }, 600);
 
@@ -1243,8 +1247,8 @@ function App() {
   React.useEffect(() => {
     window.localStorage.setItem("zulawscy-hidden-sections", JSON.stringify(sectionHidden));
     if (!cmsAvailable || !sectionsReady) return;
-    saveSectionHiddenToCms(sectionHidden).catch(() =>
-      setCmsStatus("Nie udało się zapisać widoczności sekcji w CMS")
+    saveSectionHiddenToCms(sectionHidden).catch((error) =>
+      setCmsStatus(`Nie udało się zapisać widoczności sekcji: ${error.message}`)
     );
   }, [sectionHidden, sectionsReady]);
 
@@ -1266,8 +1270,8 @@ function App() {
             __version: sectionVisibilityVersion
           });
         }
-      } catch {
-        if (isActive) setCmsStatus("CMS niedostępny, widoczność sekcji lokalna");
+      } catch (error) {
+        if (isActive) setCmsStatus(`CMS sekcji niedostępny: ${error.message}`);
       } finally {
         if (isActive) setSectionsReady(true);
       }
@@ -1399,6 +1403,35 @@ function App() {
       setCmsStatus("Aktualność usunięta z CMS");
     } catch {
       setCmsStatus("Nie udało się usunąć aktualności z CMS");
+    }
+  }
+
+  async function handleCmsDiagnostic() {
+    if (!cmsAvailable) {
+      setCmsStatus("Diagnostyka: brak zmiennych Supabase w tym deployu");
+      return;
+    }
+
+    setIsTestingCms(true);
+    setCmsStatus("Diagnostyka CMS: testuję zapis...");
+
+    try {
+      const diagnosticLang = "__diagnostic";
+      await saveTextsToCms(diagnosticLang, {
+        contentVersion: "diagnostic",
+        checkedAt: new Date().toISOString()
+      });
+      const diagnosticContent = await loadTextsFromCms(diagnosticLang);
+
+      if (!diagnosticContent?.checkedAt) {
+        throw new Error("zapis testowy nie wrócił z bazy");
+      }
+
+      setCmsStatus("Diagnostyka CMS OK: zapis i odczyt site_texts działają");
+    } catch (error) {
+      setCmsStatus(`Diagnostyka CMS błąd: ${error.message}`);
+    } finally {
+      setIsTestingCms(false);
     }
   }
 
@@ -1703,10 +1736,18 @@ function App() {
                     Wyloguj
                   </button>
                 </div>
-                <div className="border-b border-ink/10 bg-porcelain px-5 py-3">
-                  <p className="text-xs font-black uppercase tracking-[0.14em] text-forest/65">
+                <div className="flex flex-col gap-3 border-b border-ink/10 bg-porcelain px-5 py-3 md:flex-row md:items-center md:justify-between">
+                  <p className="text-xs font-black uppercase tracking-[0.14em] text-forest/65 md:max-w-3xl">
                     {cmsStatus}
                   </p>
+                  <button
+                    type="button"
+                    onClick={handleCmsDiagnostic}
+                    disabled={isTestingCms}
+                    className="inline-flex w-fit items-center justify-center rounded-full bg-ink px-4 py-2 text-xs font-black text-cream transition hover:bg-forest disabled:cursor-wait disabled:opacity-60"
+                  >
+                    {isTestingCms ? "Testuję..." : "Test CMS"}
+                  </button>
                 </div>
 
                 {panelTab === "news" ? (
