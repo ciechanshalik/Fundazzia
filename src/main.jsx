@@ -760,7 +760,8 @@ const uiText = {
     sectionVisibility: "Widoczność sekcji",
     contactShort: "Kontakt",
     enrollShort: "Zapisz",
-    partnerShort: "Partnerstwa"
+    partnerShort: "Partnerstwa",
+    privacyPolicy: "Polityka prywatności"
   },
   en: {
     partnership: "partnership",
@@ -778,7 +779,8 @@ const uiText = {
     sectionVisibility: "Section visibility",
     contactShort: "Contact",
     enrollShort: "Enroll",
-    partnerShort: "Partners"
+    partnerShort: "Partners",
+    privacyPolicy: "Privacy policy"
   },
   de: {
     partnership: "Partnerschaft",
@@ -796,7 +798,8 @@ const uiText = {
     sectionVisibility: "Sichtbarkeit",
     contactShort: "Kontakt",
     enrollShort: "Anmelden",
-    partnerShort: "Partner"
+    partnerShort: "Partner",
+    privacyPolicy: "Datenschutz"
   }
 };
 
@@ -2624,6 +2627,17 @@ function App() {
                 {t("signupButton")}
                 <ArrowUpRight size={18} />
               </button>
+              <p className="mt-4 text-xs font-semibold leading-5 text-ink/45">
+                Wysyłając formularz, zgadzasz się na kontakt w sprawie zgłoszenia.
+                Informacje o przetwarzaniu danych znajdziesz w sekcji{" "}
+                <a
+                  href="#polityka-prywatnosci"
+                  className="font-black text-forest underline decoration-gold underline-offset-4"
+                >
+                  {u("privacyPolicy")}
+                </a>
+                .
+              </p>
               {signupStatus && (
                 <p className="mt-4 text-sm font-bold text-forest">{signupStatus}</p>
               )}
@@ -3002,10 +3016,77 @@ function App() {
               {t("contactButton")}
               <ArrowUpRight size={18} />
             </button>
+            <p className="mt-4 text-xs font-semibold leading-5 text-cream/45">
+              Wysyłając formularz, zgadzasz się na kontakt w sprawie wiadomości.
+              Informacje o przetwarzaniu danych znajdziesz w sekcji{" "}
+              <a
+                href="#polityka-prywatnosci"
+                className="font-black text-gold underline underline-offset-4"
+              >
+                {u("privacyPolicy")}
+              </a>
+              .
+            </p>
             {contactStatus && (
               <p className="mt-4 text-sm font-bold text-gold">{contactStatus}</p>
             )}
           </motion.form>
+        </div>
+      </section>
+
+      <section id="polityka-prywatnosci" className="bg-porcelain py-20 sm:py-24">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[.72fr_1.28fr] lg:px-8">
+          <motion.div {...fadeUp()}>
+            <p className="eyebrow">RODO</p>
+            <h2 className="section-title">{u("privacyPolicy")}</h2>
+            <p className="mt-6 text-sm font-bold leading-6 text-ink/55">
+              Ostatnia aktualizacja: maj 2026
+            </p>
+          </motion.div>
+          <motion.div {...fadeUp(0.08)} className="grid gap-4">
+            {[
+              [
+                "Administrator danych",
+                `Administratorem danych jest ${t("brand")}. Kontakt w sprawach prywatności: ${t("contactEmail")}.`
+              ],
+              [
+                "Jakie dane zbieramy",
+                "Przez formularze możemy zbierać imię, adres email lub telefon, cel kontaktu, informacje o zgłoszeniu dziecka oraz treść wiadomości. W panelu administracyjnym przechowujemy także treści strony, aktualności i zdjęcia dodane do aktualności."
+              ],
+              [
+                "Po co przetwarzamy dane",
+                "Dane z formularzy wykorzystujemy wyłącznie po to, żeby odpowiedzieć na wiadomość, obsłużyć zgłoszenie na kurs, kontakt wolontariacki albo rozmowę partnerską. Dane treściowe z panelu służą do publikowania i utrzymania strony."
+              ],
+              [
+                "Podstawa i czas przechowywania",
+                "Dane przetwarzamy na podstawie Twojej dobrowolnej wiadomości oraz uzasadnionego interesu polegającego na obsłudze kontaktu. Przechowujemy je tak długo, jak jest to potrzebne do rozmowy i organizacji działań, chyba że przepisy wymagają dłuższego okresu."
+              ],
+              [
+                "Narzędzia techniczne",
+                "Strona działa na Vercel. Dane formularzy i treści strony są zapisywane w Supabase. Powiadomienia email wysyła Resend. Te podmioty mogą przetwarzać dane techniczne potrzebne do działania strony i formularzy."
+              ],
+              [
+                "Twoje prawa",
+                "Masz prawo dostępu do danych, sprostowania, usunięcia, ograniczenia przetwarzania, sprzeciwu oraz wniesienia skargi do Prezesa UODO. W sprawach danych napisz do nas mailowo."
+              ],
+              [
+                "Cookies i pamięć przeglądarki",
+                "Strona może korzystać z lokalnej pamięci przeglądarki, żeby zapamiętać wybrany język, stan panelu i kopię roboczą treści. Nie używamy tego do profilowania użytkowników."
+              ]
+            ].map(([title, copy]) => (
+              <article
+                key={title}
+                className="rounded-[8px] border border-forest/10 bg-white/75 p-5 shadow-panel"
+              >
+                <h3 className="font-serif text-2xl font-bold text-forest">
+                  {title}
+                </h3>
+                <p className="mt-3 text-sm font-semibold leading-7 text-ink/62">
+                  {copy}
+                </p>
+              </article>
+            ))}
+          </motion.div>
         </div>
       </section>
 
@@ -3033,6 +3114,12 @@ function App() {
                 {item.label[lang]}
               </a>
             ))}
+            <a
+              href="#polityka-prywatnosci"
+              className="text-sm font-black text-cream/60 transition hover:text-gold"
+            >
+              {u("privacyPolicy")}
+            </a>
           </div>
           <div className="lg:text-right">
             <a
@@ -3053,10 +3140,10 @@ function App() {
           <p>© 2026 {t("brand")}</p>
           <p>
             {lang === "pl"
-              ? "Dane formalne fundacji, KRS/NIP/REGON oraz polityka prywatności do uzupełnienia przed publikacją."
+              ? "Dane formalne fundacji, KRS/NIP/REGON do uzupełnienia po rejestracji."
               : lang === "en"
-                ? "Foundation registration details and privacy policy to be completed before publication."
-                : "Registrierungsdaten der Stiftung und Datenschutzerklärung vor Veröffentlichung ergänzen."}
+                ? "Foundation registration details to be completed after registration."
+                : "Registrierungsdaten der Stiftung nach der Registrierung ergänzen."}
           </p>
         </div>
       </footer>
