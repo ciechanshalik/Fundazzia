@@ -211,7 +211,7 @@ const partners = [
 const adminPassword = "noblisci2026";
 
 const defaultTexts = {
-  contentVersion: "brandbook-v6",
+  contentVersion: "brandbook-v7-parent-english",
   brand: "Fundacja Żuławscy Nobliści",
   navJoin: "Dołącz",
   heroEyebrow: "Talent nie zależy od kodu pocztowego",
@@ -219,9 +219,9 @@ const defaultTexts = {
   heroLead:
     "Jesteśmy nowoczesną fundacją edukacyjną z Żuław. Pokazujemy młodym ludziom, że ich start może być lokalny, ale horyzont nie musi mieć granic.",
   heroPrimary: "Zobacz kursy",
-  heroSecondary: "Zapisz dziecko",
-  quickPath1Title: "Kursy językowe",
-  quickPath1Copy: "praktyczna nauka języka i więcej odwagi w rozmowie",
+  heroSecondary: "Zapisz na angielski",
+  quickPath1Title: "Angielski dla dzieci i młodzieży",
+  quickPath1Copy: "małe grupy, swobodne mówienie i mniej stresu przy języku",
   quickPath2Title: "Kurs ósmoklasisty",
   quickPath2Copy: "regularne przygotowanie bez chaosu i presji",
   quickPath3Title: "Warsztaty",
@@ -308,10 +308,10 @@ const defaultTexts = {
   coursesTitle: "Konkretne wsparcie na teraz.",
   coursesLead:
     "Języki, egzamin ósmoklasisty i warsztaty prowadzone tak, żeby młodzi czuli postęp, spokój i większą pewność.",
-  course1Title: "Kursy językowe",
-  course1For: "dla uczniów, którzy chcą swobodniej mówić i rozumieć świat",
-  course1Gives: "więcej odwagi w szkole, podróży i rozmowach",
-  course1Start: "start grup po zebraniu zapisów",
+  course1Title: "Angielski dla dzieci i młodzieży",
+  course1For: "dla uczniów, którzy chcą mówić swobodniej i nadrobić braki bez wstydu",
+  course1Gives: "małe grupy, nacisk na mówienie i spokojny kontakt z językiem",
+  course1Start: "start grup po zebraniu zapisów na angielski",
   course2Title: "Kursy ósmoklasisty",
   course2For: "dla uczniów przygotowujących się do egzaminu",
   course2Gives: "plan, regularność i mniej stresu przed sprawdzianem",
@@ -339,7 +339,7 @@ const defaultTexts = {
   signupPhoneLabel: "Telefon lub email",
   signupPhonePlaceholder: "Jak najłatwiej się skontaktować?",
   signupCourseLabel: "Interesuje mnie",
-  signupCourseOption1: "kurs językowy",
+  signupCourseOption1: "angielski / kurs językowy",
   signupCourseOption2: "kurs ósmoklasisty",
   signupCourseOption3: "warsztaty",
   signupChildLabel: "Klasa / wiek dziecka",
@@ -396,12 +396,12 @@ const defaultTexts = {
   contactButton: "Wyślij wiadomość",
   faqEyebrow: "FAQ",
   faqTitle: "Najprostsze odpowiedzi, zanim napiszesz.",
-  faq1Question: "Dla kogo jest ta strona?",
+  faq1Question: "Czy mogę zapisać dziecko na angielski?",
   faq1Answer:
-    "Dla rodziców, uczniów, wolontariuszy i partnerów, którzy chcą wspierać edukację młodych ludzi z mniejszych miejscowości.",
-  faq2Question: "Co teraz realnie prowadzicie?",
+    "Tak. Zbieramy zgłoszenia do grup językowych dla dzieci i młodzieży. Po kontakcie oddzwaniamy i dopasowujemy najbliższą możliwą grupę.",
+  faq2Question: "Jak wyglądają zajęcia z angielskiego?",
   faq2Answer:
-    "Najważniejsze działania to kursy językowe, kursy ósmoklasisty i warsztaty rozwojowe.",
+    "Stawiamy na małe grupy, spokojną atmosferę i praktyczne mówienie. Chodzi o to, żeby dziecko czuło postęp, a nie kolejną presję.",
   faq3Question: "Jak zapisać dziecko?",
   faq3Answer:
     "Najprościej wypełnić formularz w sekcji Zapisy albo napisać do nas przez formularz kontaktowy.",
@@ -413,7 +413,7 @@ const defaultTexts = {
 const localizedTextOverrides = {
   pl: {},
   en: {
-    contentVersion: "brandbook-v6-en",
+  contentVersion: "brandbook-v7-parent-english-en",
     brand: "Żuławscy Nobliści Foundation",
     navJoin: "Join",
     heroEyebrow: "Talent does not depend on a postcode",
@@ -421,9 +421,9 @@ const localizedTextOverrides = {
     heroLead:
       "We are a modern educational foundation from Żuławy. We show young people that their start can be local, but their horizon does not have to be limited.",
     heroPrimary: "See courses",
-    heroSecondary: "Sign a child up",
-    quickPath1Title: "Language courses",
-    quickPath1Copy: "practical language learning and more confidence in speaking",
+    heroSecondary: "Sign up for English",
+    quickPath1Title: "English for children and teens",
+    quickPath1Copy: "small groups, freer speaking and less language stress",
     quickPath2Title: "8th-grade exam course",
     quickPath2Copy: "regular preparation without chaos or pressure",
     quickPath3Title: "Workshops",
@@ -509,10 +509,10 @@ const localizedTextOverrides = {
     coursesTitle: "Concrete support for right now.",
     coursesLead:
       "Languages, 8th-grade exam preparation and workshops designed so young people feel progress, calm and confidence.",
-    course1Title: "Language courses",
-    course1For: "for students who want to speak more freely and understand the world",
-    course1Gives: "more courage at school, while travelling and in conversations",
-    course1Start: "groups start after registration",
+    course1Title: "English for children and teens",
+    course1For: "for students who want to speak more freely and catch up without shame",
+    course1Gives: "small groups, focus on speaking and a calmer relationship with English",
+    course1Start: "groups start after English sign-ups",
     course2Title: "8th-grade exam courses",
     course2For: "for students preparing for the exam",
     course2Gives: "a plan, regularity and less stress before the test",
@@ -540,7 +540,7 @@ const localizedTextOverrides = {
     signupPhoneLabel: "Phone or email",
     signupPhonePlaceholder: "How can we reach you most easily?",
     signupCourseLabel: "I am interested in",
-    signupCourseOption1: "language course",
+    signupCourseOption1: "English / language course",
     signupCourseOption2: "8th-grade exam course",
     signupCourseOption3: "workshops",
     signupChildLabel: "Child's grade / age",
@@ -595,12 +595,12 @@ const localizedTextOverrides = {
     contactButton: "Send message",
     faqEyebrow: "FAQ",
     faqTitle: "Simple answers before you write.",
-    faq1Question: "Who is this website for?",
+    faq1Question: "Can I sign my child up for English?",
     faq1Answer:
-      "For parents, students, volunteers and partners who want to support education for young people from smaller places.",
-    faq2Question: "What do you actually run now?",
+      "Yes. We collect sign-ups for language groups for children and teenagers. After you contact us, we call back and match the closest possible group.",
+    faq2Question: "What are English classes like?",
     faq2Answer:
-      "The main activities are language courses, 8th-grade exam preparation and development workshops.",
+      "We focus on small groups, a calm atmosphere and practical speaking, so the child feels progress instead of more pressure.",
     faq3Question: "How do I sign a child up?",
     faq3Answer:
       "The easiest way is to fill in the form in the sign-up section or write to us through the contact form.",
@@ -609,7 +609,7 @@ const localizedTextOverrides = {
       "It can choose a partnership package and fund one, two or three places for a language trip."
   },
   de: {
-    contentVersion: "brandbook-v6-de",
+    contentVersion: "brandbook-v7-parent-english-de",
     brand: "Stiftung Żuławscy Nobliści",
     navJoin: "Mitmachen",
     heroEyebrow: "Talent hängt nicht von der Postleitzahl ab",
@@ -617,9 +617,9 @@ const localizedTextOverrides = {
     heroLead:
       "Wir sind eine moderne Bildungsstiftung aus Żuławy. Wir zeigen jungen Menschen, dass ihr Start lokal sein kann, ihr Horizont aber nicht begrenzt sein muss.",
     heroPrimary: "Kurse ansehen",
-    heroSecondary: "Kind anmelden",
-    quickPath1Title: "Sprachkurse",
-    quickPath1Copy: "praktisches Sprachenlernen und mehr Sicherheit im Sprechen",
+    heroSecondary: "Für Englisch anmelden",
+    quickPath1Title: "Englisch für Kinder und Jugendliche",
+    quickPath1Copy: "kleine Gruppen, freieres Sprechen und weniger Sprachstress",
     quickPath2Title: "Kurs für die 8.-Klasse-Prüfung",
     quickPath2Copy: "regelmäßige Vorbereitung ohne Chaos und Druck",
     quickPath3Title: "Workshops",
@@ -705,10 +705,10 @@ const localizedTextOverrides = {
     coursesTitle: "Konkrete Unterstützung für jetzt.",
     coursesLead:
       "Sprachen, Vorbereitung auf die Prüfung der 8. Klasse und Workshops, damit junge Menschen Fortschritt, Ruhe und Selbstvertrauen spüren.",
-    course1Title: "Sprachkurse",
-    course1For: "für Schüler, die freier sprechen und die Welt besser verstehen wollen",
-    course1Gives: "mehr Mut in der Schule, auf Reisen und in Gesprächen",
-    course1Start: "Gruppen starten nach Anmeldung",
+    course1Title: "Englisch für Kinder und Jugendliche",
+    course1For: "für Schüler, die freier sprechen und ohne Scham Lücken schließen wollen",
+    course1Gives: "kleine Gruppen, Fokus auf Sprechen und ein ruhigerer Zugang zu Englisch",
+    course1Start: "Gruppen starten nach Englisch-Anmeldungen",
     course2Title: "Kurse für die 8.-Klasse-Prüfung",
     course2For: "für Schüler in der Prüfungsvorbereitung",
     course2Gives: "Plan, Regelmäßigkeit und weniger Stress vor der Prüfung",
@@ -736,7 +736,7 @@ const localizedTextOverrides = {
     signupPhoneLabel: "Telefon oder E-Mail",
     signupPhonePlaceholder: "Wie erreichen wir dich am besten?",
     signupCourseLabel: "Ich interessiere mich für",
-    signupCourseOption1: "Sprachkurs",
+    signupCourseOption1: "Englisch / Sprachkurs",
     signupCourseOption2: "Kurs für die 8.-Klasse-Prüfung",
     signupCourseOption3: "Workshops",
     signupChildLabel: "Klasse / Alter des Kindes",
@@ -791,12 +791,12 @@ const localizedTextOverrides = {
     contactButton: "Nachricht senden",
     faqEyebrow: "FAQ",
     faqTitle: "Einfache Antworten, bevor du schreibst.",
-    faq1Question: "Für wen ist diese Seite?",
+    faq1Question: "Kann ich mein Kind für Englisch anmelden?",
     faq1Answer:
-      "Für Eltern, Schüler, Freiwillige und Partner, die Bildung für junge Menschen aus kleineren Orten unterstützen möchten.",
-    faq2Question: "Was bietet ihr aktuell an?",
+      "Ja. Wir sammeln Anmeldungen für Sprachgruppen für Kinder und Jugendliche. Nach der Kontaktaufnahme melden wir uns und schlagen die passende Gruppe vor.",
+    faq2Question: "Wie läuft der Englischunterricht ab?",
     faq2Answer:
-      "Die wichtigsten Angebote sind Sprachkurse, Vorbereitung auf die Prüfung der 8. Klasse und Entwicklungsworkshops.",
+      "Wir setzen auf kleine Gruppen, eine ruhige Atmosphäre und praktisches Sprechen, damit das Kind Fortschritt statt zusätzlichen Druck erlebt.",
     faq3Question: "Wie melde ich ein Kind an?",
     faq3Answer:
       "Am einfachsten über das Formular im Anmeldebereich oder über das Kontaktformular.",
@@ -840,6 +840,40 @@ function normalizeCmsTexts(lang, remoteTexts) {
   if (["Zostań wolontariuszem", "Become a volunteer", "Freiwillig mitmachen"].includes(normalized.heroSecondary)) {
     normalized.heroPrimary = defaults.heroPrimary;
     normalized.heroSecondary = defaults.heroSecondary;
+  }
+
+  if (
+    [
+      "Zapisz dziecko",
+      "Sign a child up",
+      "Kind anmelden"
+    ].includes(normalized.heroSecondary)
+  ) {
+    normalized.heroSecondary = defaults.heroSecondary;
+  }
+
+  if (
+    [
+      "Kursy językowe",
+      "Language courses",
+      "Sprachkurse"
+    ].includes(normalized.quickPath1Title)
+  ) {
+    [
+      "quickPath1Title",
+      "quickPath1Copy",
+      "course1Title",
+      "course1For",
+      "course1Gives",
+      "course1Start",
+      "signupCourseOption1",
+      "faq1Question",
+      "faq1Answer",
+      "faq2Question",
+      "faq2Answer"
+    ].forEach((key) => {
+      normalized[key] = defaults[key];
+    });
   }
 
   normalized.contentVersion = defaults.contentVersion;
