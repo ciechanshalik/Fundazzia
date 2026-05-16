@@ -761,7 +761,8 @@ const uiText = {
     contactShort: "Kontakt",
     enrollShort: "Zapisz",
     partnerShort: "Partnerstwa",
-    privacyPolicy: "Polityka prywatności"
+    privacyPolicy: "Polityka prywatności",
+    termsAndPrivacy: "Regulamin i prywatność"
   },
   en: {
     partnership: "partnership",
@@ -780,7 +781,8 @@ const uiText = {
     contactShort: "Contact",
     enrollShort: "Enroll",
     partnerShort: "Partners",
-    privacyPolicy: "Privacy policy"
+    privacyPolicy: "Privacy policy",
+    termsAndPrivacy: "Terms and privacy"
   },
   de: {
     partnership: "Partnerschaft",
@@ -799,7 +801,8 @@ const uiText = {
     contactShort: "Kontakt",
     enrollShort: "Anmelden",
     partnerShort: "Partner",
-    privacyPolicy: "Datenschutz"
+    privacyPolicy: "Datenschutz",
+    termsAndPrivacy: "Regeln und Datenschutz"
   }
 };
 
@@ -1092,6 +1095,9 @@ function App() {
   const [isPanelOpen, setIsPanelOpen] = React.useState(
     window.location.hash === "#panel"
   );
+  const [isLegalPage, setIsLegalPage] = React.useState(
+    new URLSearchParams(window.location.search).get("legal") === "privacy"
+  );
   const [isLoggedIn, setIsLoggedIn] = React.useState(
     window.localStorage.getItem("zulawscy-admin") === "true"
   );
@@ -1362,10 +1368,24 @@ function App() {
   }, [latestNews.length]);
 
   React.useEffect(() => {
-    const handleHashChange = () => setIsPanelOpen(window.location.hash === "#panel");
-    window.addEventListener("hashchange", handleHashChange);
+    const syncRouteState = () => {
+      setIsPanelOpen(window.location.hash === "#panel");
+      setIsLegalPage(
+        new URLSearchParams(window.location.search).get("legal") === "privacy"
+      );
+    };
 
-    return () => window.removeEventListener("hashchange", handleHashChange);
+    const handleClick = () => window.setTimeout(syncRouteState, 0);
+
+    window.addEventListener("hashchange", syncRouteState);
+    window.addEventListener("popstate", syncRouteState);
+    window.addEventListener("click", handleClick);
+
+    return () => {
+      window.removeEventListener("hashchange", syncRouteState);
+      window.removeEventListener("popstate", syncRouteState);
+      window.removeEventListener("click", handleClick);
+    };
   }, []);
 
   function handleLogin(event) {
@@ -1626,6 +1646,100 @@ function App() {
     if (window.location.hash === "#panel") {
       window.history.replaceState(null, "", window.location.pathname);
     }
+  }
+
+  if (isLegalPage) {
+    return (
+      <main className="min-h-screen bg-porcelain text-ink">
+        <header className="border-b border-ink/10 bg-porcelain">
+          <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-5 sm:px-6">
+            <a href="/" className="flex items-center gap-3 text-sm font-black text-forest">
+              <span className="grid h-10 w-10 place-items-center overflow-hidden rounded-full bg-white shadow-sm">
+                <img
+                  src={logo}
+                  alt="Logo Fundacji Żuławscy Nobliści"
+                  className="h-9 w-9 object-contain"
+                />
+              </span>
+              {t("brand")}
+            </a>
+            <a
+              href="/"
+              className="rounded-full bg-ink px-4 py-2 text-xs font-black text-cream transition hover:bg-forest"
+            >
+              Wróć na stronę
+            </a>
+          </div>
+        </header>
+        <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20">
+          <p className="eyebrow">RODO / regulamin</p>
+          <h1 className="mt-4 max-w-4xl font-serif text-[clamp(3rem,8vw,6.5rem)] font-extrabold leading-[0.9] text-forest">
+            {u("termsAndPrivacy")}
+          </h1>
+          <p className="mt-6 max-w-2xl text-lg font-semibold leading-8 text-ink/62">
+            Prosty dokument opisujący zasady korzystania ze strony, formularzy,
+            panelu treści oraz sposób przetwarzania danych.
+          </p>
+
+          <div className="mt-12 grid gap-4">
+            {[
+              [
+                "1. Administrator danych",
+                `Administratorem danych jest ${t("brand")}. Kontakt w sprawach prywatności i danych: ${t("contactEmail")}. Dane formalne fundacji, KRS/NIP/REGON zostaną uzupełnione po rejestracji.`
+              ],
+              [
+                "2. Jakie dane zbieramy",
+                "Przez formularze możemy zbierać imię, adres email lub telefon, cel kontaktu, informacje o zgłoszeniu dziecka oraz treść wiadomości. W panelu administracyjnym przechowujemy także treści strony, aktualności i zdjęcia dodane do aktualności."
+              ],
+              [
+                "3. Po co przetwarzamy dane",
+                "Dane z formularzy wykorzystujemy wyłącznie po to, żeby odpowiedzieć na wiadomość, obsłużyć zgłoszenie na kurs, kontakt wolontariacki albo rozmowę partnerską. Dane treściowe z panelu służą do publikowania i utrzymania strony."
+              ],
+              [
+                "4. Podstawa i czas przechowywania",
+                "Dane przetwarzamy na podstawie dobrowolnej wiadomości oraz uzasadnionego interesu polegającego na obsłudze kontaktu. Przechowujemy je tak długo, jak jest to potrzebne do rozmowy i organizacji działań, chyba że przepisy wymagają dłuższego okresu."
+              ],
+              [
+                "5. Narzędzia techniczne",
+                "Strona działa na Vercel. Dane formularzy i treści strony są zapisywane w Supabase. Powiadomienia email wysyła Resend. Te podmioty mogą przetwarzać dane techniczne potrzebne do działania strony i formularzy."
+              ],
+              [
+                "6. Twoje prawa",
+                "Masz prawo dostępu do danych, sprostowania, usunięcia, ograniczenia przetwarzania, sprzeciwu oraz wniesienia skargi do Prezesa UODO. W sprawach danych napisz do nas mailowo."
+              ],
+              [
+                "7. Cookies i pamięć przeglądarki",
+                "Strona może korzystać z lokalnej pamięci przeglądarki, żeby zapamiętać wybrany język, stan panelu i kopię roboczą treści. Nie używamy tego do profilowania użytkowników."
+              ],
+              [
+                "8. Regulamin korzystania ze strony",
+                "Strona ma charakter informacyjny. Treści publikowane na stronie nie stanowią oferty handlowej w rozumieniu Kodeksu cywilnego. Korzystając z formularza, użytkownik podaje dane dobrowolnie i zobowiązuje się nie przesyłać treści bezprawnych."
+              ],
+              [
+                "9. Formularze i kontakt",
+                "Wysłanie formularza nie oznacza automatycznego przyjęcia na kurs, wolontariat lub współpracę partnerską. Odpowiadamy indywidualnie, korzystając z podanego kontaktu."
+              ],
+              [
+                "10. Aktualizacje dokumentu",
+                "Dokument może być aktualizowany wraz z rozwojem strony i działań fundacji. Ostatnia aktualizacja: maj 2026."
+              ]
+            ].map(([title, copy]) => (
+              <article
+                key={title}
+                className="rounded-[8px] border border-forest/10 bg-white/75 p-5 shadow-panel"
+              >
+                <h2 className="font-serif text-2xl font-bold text-forest">
+                  {title}
+                </h2>
+                <p className="mt-3 text-sm font-semibold leading-7 text-ink/62">
+                  {copy}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
+      </main>
+    );
   }
 
   return (
@@ -2631,10 +2745,10 @@ function App() {
                 Wysyłając formularz, zgadzasz się na kontakt w sprawie zgłoszenia.
                 Informacje o przetwarzaniu danych znajdziesz w sekcji{" "}
                 <a
-                  href="#polityka-prywatnosci"
+                  href="/?legal=privacy"
                   className="font-black text-forest underline decoration-gold underline-offset-4"
                 >
-                  {u("privacyPolicy")}
+                  {u("termsAndPrivacy")}
                 </a>
                 .
               </p>
@@ -3020,10 +3134,10 @@ function App() {
               Wysyłając formularz, zgadzasz się na kontakt w sprawie wiadomości.
               Informacje o przetwarzaniu danych znajdziesz w sekcji{" "}
               <a
-                href="#polityka-prywatnosci"
+                href="/?legal=privacy"
                 className="font-black text-gold underline underline-offset-4"
               >
-                {u("privacyPolicy")}
+                {u("termsAndPrivacy")}
               </a>
               .
             </p>
@@ -3031,62 +3145,6 @@ function App() {
               <p className="mt-4 text-sm font-bold text-gold">{contactStatus}</p>
             )}
           </motion.form>
-        </div>
-      </section>
-
-      <section id="polityka-prywatnosci" className="bg-porcelain py-20 sm:py-24">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[.72fr_1.28fr] lg:px-8">
-          <motion.div {...fadeUp()}>
-            <p className="eyebrow">RODO</p>
-            <h2 className="section-title">{u("privacyPolicy")}</h2>
-            <p className="mt-6 text-sm font-bold leading-6 text-ink/55">
-              Ostatnia aktualizacja: maj 2026
-            </p>
-          </motion.div>
-          <motion.div {...fadeUp(0.08)} className="grid gap-4">
-            {[
-              [
-                "Administrator danych",
-                `Administratorem danych jest ${t("brand")}. Kontakt w sprawach prywatności: ${t("contactEmail")}.`
-              ],
-              [
-                "Jakie dane zbieramy",
-                "Przez formularze możemy zbierać imię, adres email lub telefon, cel kontaktu, informacje o zgłoszeniu dziecka oraz treść wiadomości. W panelu administracyjnym przechowujemy także treści strony, aktualności i zdjęcia dodane do aktualności."
-              ],
-              [
-                "Po co przetwarzamy dane",
-                "Dane z formularzy wykorzystujemy wyłącznie po to, żeby odpowiedzieć na wiadomość, obsłużyć zgłoszenie na kurs, kontakt wolontariacki albo rozmowę partnerską. Dane treściowe z panelu służą do publikowania i utrzymania strony."
-              ],
-              [
-                "Podstawa i czas przechowywania",
-                "Dane przetwarzamy na podstawie Twojej dobrowolnej wiadomości oraz uzasadnionego interesu polegającego na obsłudze kontaktu. Przechowujemy je tak długo, jak jest to potrzebne do rozmowy i organizacji działań, chyba że przepisy wymagają dłuższego okresu."
-              ],
-              [
-                "Narzędzia techniczne",
-                "Strona działa na Vercel. Dane formularzy i treści strony są zapisywane w Supabase. Powiadomienia email wysyła Resend. Te podmioty mogą przetwarzać dane techniczne potrzebne do działania strony i formularzy."
-              ],
-              [
-                "Twoje prawa",
-                "Masz prawo dostępu do danych, sprostowania, usunięcia, ograniczenia przetwarzania, sprzeciwu oraz wniesienia skargi do Prezesa UODO. W sprawach danych napisz do nas mailowo."
-              ],
-              [
-                "Cookies i pamięć przeglądarki",
-                "Strona może korzystać z lokalnej pamięci przeglądarki, żeby zapamiętać wybrany język, stan panelu i kopię roboczą treści. Nie używamy tego do profilowania użytkowników."
-              ]
-            ].map(([title, copy]) => (
-              <article
-                key={title}
-                className="rounded-[8px] border border-forest/10 bg-white/75 p-5 shadow-panel"
-              >
-                <h3 className="font-serif text-2xl font-bold text-forest">
-                  {title}
-                </h3>
-                <p className="mt-3 text-sm font-semibold leading-7 text-ink/62">
-                  {copy}
-                </p>
-              </article>
-            ))}
-          </motion.div>
         </div>
       </section>
 
@@ -3115,10 +3173,10 @@ function App() {
               </a>
             ))}
             <a
-              href="#polityka-prywatnosci"
+              href="/?legal=privacy"
               className="text-sm font-black text-cream/60 transition hover:text-gold"
             >
-              {u("privacyPolicy")}
+              {u("termsAndPrivacy")}
             </a>
           </div>
           <div className="lg:text-right">
