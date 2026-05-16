@@ -218,8 +218,16 @@ const defaultTexts = {
   heroTitle: "Z małych miejsc w wielki świat.",
   heroLead:
     "Jesteśmy nowoczesną fundacją edukacyjną z Żuław. Pokazujemy młodym ludziom, że ich start może być lokalny, ale horyzont nie musi mieć granic.",
-  heroPrimary: "Zobacz, co robimy",
-  heroSecondary: "Zostań wolontariuszem",
+  heroPrimary: "Zobacz kursy",
+  heroSecondary: "Zapisz dziecko",
+  quickPath1Title: "Kursy językowe",
+  quickPath1Copy: "praktyczna nauka języka i więcej odwagi w rozmowie",
+  quickPath2Title: "Kurs ósmoklasisty",
+  quickPath2Copy: "regularne przygotowanie bez chaosu i presji",
+  quickPath3Title: "Warsztaty",
+  quickPath3Copy: "pewność siebie, komunikacja i myślenie szerzej",
+  quickPath4Title: "Partnerstwa",
+  quickPath4Copy: "firmy i instytucje mogą ufundować realne doświadczenia",
   missionEyebrow: "Misja",
   missionTitle: "Ambicja nie ma kodu pocztowego.",
   missionLead:
@@ -385,7 +393,21 @@ const defaultTexts = {
   contactPurposeOption4: "Mam inne pytanie",
   contactMessageLabel: "Wiadomość",
   contactMessagePlaceholder: "Napisz krótko, z czym przychodzisz.",
-  contactButton: "Wyślij wiadomość"
+  contactButton: "Wyślij wiadomość",
+  faqEyebrow: "FAQ",
+  faqTitle: "Najprostsze odpowiedzi, zanim napiszesz.",
+  faq1Question: "Dla kogo jest ta strona?",
+  faq1Answer:
+    "Dla rodziców, uczniów, wolontariuszy i partnerów, którzy chcą wspierać edukację młodych ludzi z mniejszych miejscowości.",
+  faq2Question: "Co teraz realnie prowadzicie?",
+  faq2Answer:
+    "Najważniejsze działania to kursy językowe, kursy ósmoklasisty i warsztaty rozwojowe.",
+  faq3Question: "Jak zapisać dziecko?",
+  faq3Answer:
+    "Najprościej wypełnić formularz w sekcji Zapisy albo napisać do nas przez formularz kontaktowy.",
+  faq4Question: "Jak firma może pomóc?",
+  faq4Answer:
+    "Może wybrać pakiet partnerski i ufundować jedno, dwa albo trzy miejsca na wyjazd językowy."
 };
 
 const localizedTextOverrides = {
@@ -398,8 +420,16 @@ const localizedTextOverrides = {
     heroTitle: "From small places to a wider world.",
     heroLead:
       "We are a modern educational foundation from Żuławy. We show young people that their start can be local, but their horizon does not have to be limited.",
-    heroPrimary: "See what we do",
-    heroSecondary: "Become a volunteer",
+    heroPrimary: "See courses",
+    heroSecondary: "Sign a child up",
+    quickPath1Title: "Language courses",
+    quickPath1Copy: "practical language learning and more confidence in speaking",
+    quickPath2Title: "8th-grade exam course",
+    quickPath2Copy: "regular preparation without chaos or pressure",
+    quickPath3Title: "Workshops",
+    quickPath3Copy: "confidence, communication and broader thinking",
+    quickPath4Title: "Partnerships",
+    quickPath4Copy: "companies and institutions can fund real experiences",
     missionEyebrow: "Mission",
     missionTitle: "Ambition has no postcode.",
     missionLead:
@@ -562,7 +592,21 @@ const localizedTextOverrides = {
     contactPurposeOption4: "I have another question",
     contactMessageLabel: "Message",
     contactMessagePlaceholder: "Tell us briefly what brings you here.",
-    contactButton: "Send message"
+    contactButton: "Send message",
+    faqEyebrow: "FAQ",
+    faqTitle: "Simple answers before you write.",
+    faq1Question: "Who is this website for?",
+    faq1Answer:
+      "For parents, students, volunteers and partners who want to support education for young people from smaller places.",
+    faq2Question: "What do you actually run now?",
+    faq2Answer:
+      "The main activities are language courses, 8th-grade exam preparation and development workshops.",
+    faq3Question: "How do I sign a child up?",
+    faq3Answer:
+      "The easiest way is to fill in the form in the sign-up section or write to us through the contact form.",
+    faq4Question: "How can a company help?",
+    faq4Answer:
+      "It can choose a partnership package and fund one, two or three places for a language trip."
   },
   de: {
     contentVersion: "brandbook-v6-de",
@@ -572,8 +616,16 @@ const localizedTextOverrides = {
     heroTitle: "Von kleinen Orten in eine große Welt.",
     heroLead:
       "Wir sind eine moderne Bildungsstiftung aus Żuławy. Wir zeigen jungen Menschen, dass ihr Start lokal sein kann, ihr Horizont aber nicht begrenzt sein muss.",
-    heroPrimary: "Entdecken",
-    heroSecondary: "Freiwillig mitmachen",
+    heroPrimary: "Kurse ansehen",
+    heroSecondary: "Kind anmelden",
+    quickPath1Title: "Sprachkurse",
+    quickPath1Copy: "praktisches Sprachenlernen und mehr Sicherheit im Sprechen",
+    quickPath2Title: "Kurs für die 8.-Klasse-Prüfung",
+    quickPath2Copy: "regelmäßige Vorbereitung ohne Chaos und Druck",
+    quickPath3Title: "Workshops",
+    quickPath3Copy: "Selbstvertrauen, Kommunikation und breiteres Denken",
+    quickPath4Title: "Partnerschaften",
+    quickPath4Copy: "Firmen und Institutionen können echte Erfahrungen finanzieren",
     missionEyebrow: "Mission",
     missionTitle: "Ambition hat keine Postleitzahl.",
     missionLead:
@@ -736,7 +788,21 @@ const localizedTextOverrides = {
     contactPurposeOption4: "Ich habe eine andere Frage",
     contactMessageLabel: "Nachricht",
     contactMessagePlaceholder: "Schreib kurz, womit du kommst.",
-    contactButton: "Nachricht senden"
+    contactButton: "Nachricht senden",
+    faqEyebrow: "FAQ",
+    faqTitle: "Einfache Antworten, bevor du schreibst.",
+    faq1Question: "Für wen ist diese Seite?",
+    faq1Answer:
+      "Für Eltern, Schüler, Freiwillige und Partner, die Bildung für junge Menschen aus kleineren Orten unterstützen möchten.",
+    faq2Question: "Was bietet ihr aktuell an?",
+    faq2Answer:
+      "Die wichtigsten Angebote sind Sprachkurse, Vorbereitung auf die Prüfung der 8. Klasse und Entwicklungsworkshops.",
+    faq3Question: "Wie melde ich ein Kind an?",
+    faq3Answer:
+      "Am einfachsten über das Formular im Anmeldebereich oder über das Kontaktformular.",
+    faq4Question: "Wie kann eine Firma helfen?",
+    faq4Answer:
+      "Sie kann ein Partnerpaket wählen und ein, zwei oder drei Plätze für eine Sprachreise finanzieren."
   }
 };
 
@@ -769,6 +835,11 @@ function normalizeCmsTexts(lang, remoteTexts) {
 
   if (normalized.contactEmail === "kontakt@zulawscynoblisci.pl") {
     normalized.contactEmail = defaults.contactEmail;
+  }
+
+  if (["Zostań wolontariuszem", "Become a volunteer", "Freiwillig mitmachen"].includes(normalized.heroSecondary)) {
+    normalized.heroPrimary = defaults.heroPrimary;
+    normalized.heroSecondary = defaults.heroSecondary;
   }
 
   normalized.contentVersion = defaults.contentVersion;
@@ -839,7 +910,7 @@ const uiText = {
 };
 
 const textEditorGroups = [
-  ["Hero", ["brand", "navJoin", "heroEyebrow", "heroTitle", "heroLead", "heroPrimary", "heroSecondary"]],
+  ["Hero", ["brand", "navJoin", "heroEyebrow", "heroTitle", "heroLead", "heroPrimary", "heroSecondary", "quickPath1Title", "quickPath1Copy", "quickPath2Title", "quickPath2Copy", "quickPath3Title", "quickPath3Copy", "quickPath4Title", "quickPath4Copy"]],
   ["Misja", ["missionEyebrow", "missionTitle", "missionLead", "missionCard1Title", "missionCard1Copy", "missionCard2Title", "missionCard2Copy", "missionCard3Title", "missionCard3Copy"]],
   ["Aktualności", ["newsEyebrow", "newsTitle", "newsLead"]],
   ["Projekty", ["projectsEyebrow", "projectsTitle", "project1Title", "project1Label", "project1Copy", "project2Title", "project2Label", "project2Copy", "project3Title", "project3Label", "project3Copy"]],
@@ -852,6 +923,7 @@ const textEditorGroups = [
   ["Dołącz", ["joinEyebrow", "joinTitle", "joinStudentTitle", "joinStudentCopy", "joinVolunteerTitle", "joinVolunteerCopy", "joinPartnerTitle", "joinPartnerCopy"]],
   ["Partnerzy", ["partnersEyebrow", "partnersTitle", "partner1", "partner2", "partner3", "partner4", "partner5", "partner6"]],
   ["Pakiety partnerskie", ["packagesEyebrow", "packagesTitle", "packagesLead", "package1Name", "package1Price", "package1For", "package1Item1", "package1Item2", "package1Item3", "package1Item4", "package2Name", "package2Price", "package2For", "package2Item1", "package2Item2", "package2Item3", "package2Item4", "package3Name", "package3Price", "package3For", "package3Item1", "package3Item2", "package3Item3", "package3Item4"]],
+  ["FAQ", ["faqEyebrow", "faqTitle", "faq1Question", "faq1Answer", "faq2Question", "faq2Answer", "faq3Question", "faq3Answer", "faq4Question", "faq4Answer"]],
   ["Kontakt", ["contactEyebrow", "contactTitle", "contactEmail", "contactPlace", "contactNameLabel", "contactNamePlaceholder", "contactEmailLabel", "contactEmailPlaceholder", "contactPurposeLabel", "contactPurposeOption1", "contactPurposeOption2", "contactPurposeOption3", "contactPurposeOption4", "contactMessageLabel", "contactMessagePlaceholder", "contactButton"]]
 ];
 
@@ -1263,6 +1335,18 @@ function App() {
     ...(!sectionHidden.packages
       ? [[HeartHandshake, u("partnerShort"), "#pakiety-partnerskie", "bg-forest text-cream"]]
       : [])
+  ];
+  const quickPaths = [
+    [BookOpen, t("quickPath1Title"), t("quickPath1Copy"), "#kursy"],
+    [GraduationCap, t("quickPath2Title"), t("quickPath2Copy"), "#zapisy"],
+    [Sparkles, t("quickPath3Title"), t("quickPath3Copy"), "#projekty"],
+    [HeartHandshake, t("quickPath4Title"), t("quickPath4Copy"), "#pakiety-partnerskie"]
+  ];
+  const faqItems = [
+    [t("faq1Question"), t("faq1Answer")],
+    [t("faq2Question"), t("faq2Answer")],
+    [t("faq3Question"), t("faq3Answer")],
+    [t("faq4Question"), t("faq4Answer")]
   ];
 
   React.useEffect(() => {
@@ -2475,7 +2559,7 @@ function App() {
                   <ArrowUpRight size={18} />
                 </a>
                 <a
-                  href="#kontakt"
+                  href="#zapisy"
                   className="inline-flex items-center gap-2 rounded-full border border-cream/25 px-6 py-4 text-sm font-bold text-cream backdrop-blur-xl transition hover:bg-cream hover:text-ink"
                 >
                   {t("heroSecondary")}
@@ -2483,6 +2567,27 @@ function App() {
               </div>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      <section className="bg-porcelain py-4">
+        <div className="mx-auto grid max-w-7xl gap-px overflow-hidden rounded-[8px] border border-forest/10 bg-forest/10 px-4 sm:px-6 md:grid-cols-4 lg:px-8">
+          {quickPaths.map(([Icon, title, copy, href]) => (
+            <a
+              key={title}
+              href={href}
+              className="group bg-white/78 p-5 transition hover:bg-forest hover:text-cream"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <Icon className="text-forest transition group-hover:text-gold" size={22} />
+                <ArrowUpRight className="text-ink/25 transition group-hover:text-gold" size={18} />
+              </div>
+              <h2 className="mt-6 text-lg font-black leading-tight">{title}</h2>
+              <p className="mt-2 text-sm font-semibold leading-6 text-ink/58 transition group-hover:text-cream/70">
+                {copy}
+              </p>
+            </a>
+          ))}
         </div>
       </section>
 
@@ -3112,6 +3217,31 @@ function App() {
         </div>
       </section>
       )}
+
+      <section className="bg-porcelain py-20 sm:py-28">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[.8fr_1.2fr] lg:px-8">
+          <motion.div {...fadeUp()}>
+            <p className="eyebrow">{t("faqEyebrow")}</p>
+            <h2 className="section-title">{t("faqTitle")}</h2>
+          </motion.div>
+          <div className="grid gap-3">
+            {faqItems.map(([question, answer], index) => (
+              <motion.article
+                key={question}
+                {...fadeUp(index * 0.05)}
+                className="rounded-[8px] border border-forest/10 bg-white/75 p-5 shadow-panel"
+              >
+                <h3 className="text-lg font-black leading-tight text-forest">
+                  {question}
+                </h3>
+                <p className="mt-3 text-sm font-semibold leading-7 text-ink/62">
+                  {answer}
+                </p>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section id="kontakt" className="relative bg-ink py-20 text-cream sm:py-28">
         <div className="absolute inset-0 bg-grain opacity-60" />
