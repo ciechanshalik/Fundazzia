@@ -49,7 +49,6 @@ const languages = [
 const navItems = [
   { id: "misja", label: { pl: "Misja", en: "Mission", de: "Mission" } },
   { id: "aktualnosci", label: { pl: "Aktualności", en: "News", de: "News" } },
-  { id: "projekty", label: { pl: "Projekty", en: "Work", de: "Projekte" } },
   { id: "inicjatywy", label: { pl: "Inicjatywy", en: "Initiatives", de: "Initiativen" } },
   { id: "zapisy", label: { pl: "Zapisy", en: "Sign up", de: "Anmeldung" } },
   { id: "edukacja", label: { pl: "Edukacja", en: "Education", de: "Bildung" } },
@@ -159,27 +158,6 @@ const localizedNews = {
     }
   ]
 };
-
-const projects = [
-  {
-    title: "Nobliści Lab",
-    label: "twórczość + nauka",
-    copy:
-      "Weekendowe pracownie, w których licealiści i studenci projektują kampanie, podcasty, wystawy i mikrobadania o swoim regionie."
-  },
-  {
-    title: "Mosty Europy",
-    label: "mobilność",
-    copy:
-      "Wyjazdy edukacyjne, wymiany młodzieżowe i partnerstwa, które uczą odwagi, języków i współpracy ponad granicami."
-  },
-  {
-    title: "Żuławy Future School",
-    label: "kompetencje jutra",
-    copy:
-      "Program mentorski o AI, mediach, klimacie, obywatelskości i świadomym wyborze ścieżki po szkole."
-  }
-];
 
 const testimonials = [
   {
@@ -1076,7 +1054,6 @@ const textEditorGroups = [
   ["Hero", ["brand", "navJoin", "heroEyebrow", "heroTitle", "heroLead", "heroPrimary", "heroSecondary", "quickPath1Title", "quickPath1Copy", "quickPath2Title", "quickPath2Copy", "quickPath3Title", "quickPath3Copy", "quickPath4Title", "quickPath4Copy"]],
   ["Misja", ["missionEyebrow", "missionTitle", "missionLead", "missionCard1Title", "missionCard1Copy", "missionCard2Title", "missionCard2Copy", "missionCard3Title", "missionCard3Copy"]],
   ["Aktualności", ["newsEyebrow", "newsTitle", "newsLead"]],
-  ["Projekty", ["projectsEyebrow", "projectsTitle", "project1Title", "project1Label", "project1Copy", "project2Title", "project2Label", "project2Copy", "project3Title", "project3Label", "project3Copy"]],
   ["Inicjatywy", ["coursesEyebrow", "coursesTitle", "coursesLead", "course1Title", "course1For", "course1Gives", "course1Start", "course2Title", "course2For", "course2Gives", "course2Start", "course3Title", "course3For", "course3Gives", "course3Start"]],
   ["Zapisy", ["enrollmentEyebrow", "enrollmentTitle", "enrollmentLead", "start1Label", "start1Value", "start1Copy", "start2Label", "start2Value", "start2Copy", "start3Label", "start3Value", "start3Copy", "signupTitle", "signupNameLabel", "signupNamePlaceholder", "signupPhoneLabel", "signupPhonePlaceholder", "signupCourseLabel", "signupCourseOption1", "signupCourseOption2", "signupCourseOption3", "signupChildLabel", "signupChildPlaceholder", "signupMessageLabel", "signupMessagePlaceholder", "signupButton"]],
   ["Rodzice", ["parentsEyebrow", "parentsTitle", "parentsLead", "parent1Title", "parent1Copy", "parent2Title", "parent2Copy", "parent3Title", "parent3Copy"]],
@@ -1401,23 +1378,6 @@ function App() {
     const visibilityKey = navVisibilityKey[item.id];
     return !visibilityKey || !sectionHidden[visibilityKey];
   });
-  const projects = [
-    {
-      title: t("project1Title"),
-      label: t("project1Label"),
-      copy: t("project1Copy")
-    },
-    {
-      title: t("project2Title"),
-      label: t("project2Label"),
-      copy: t("project2Copy")
-    },
-    {
-      title: t("project3Title"),
-      label: t("project3Label"),
-      copy: t("project3Copy")
-    }
-  ];
   const testimonials = [
     { quote: t("quote1"), name: t("quote1Name") },
     { quote: t("quote2"), name: t("quote2Name") },
@@ -1484,7 +1444,7 @@ function App() {
   const quickPaths = [
     [BookOpen, t("quickPath1Title"), t("quickPath1Copy"), "#inicjatywy"],
     [GraduationCap, t("quickPath2Title"), t("quickPath2Copy"), "#zapisy"],
-    [Sparkles, t("quickPath3Title"), t("quickPath3Copy"), "#projekty"],
+    [Sparkles, t("quickPath3Title"), t("quickPath3Copy"), "#inicjatywy"],
     [HeartHandshake, t("quickPath4Title"), t("quickPath4Copy"), "#pakiety-partnerskie"]
   ];
   const faqItems = [
@@ -3039,7 +2999,7 @@ function App() {
               </p>
               <div className="flex flex-wrap gap-3 md:justify-end">
                 <a
-                  href="#projekty"
+                  href="#inicjatywy"
                   className="inline-flex items-center gap-2 rounded-full bg-cream px-6 py-4 text-sm font-black text-forest transition hover:-translate-y-1"
                 >
                   {t("heroPrimary")}
@@ -3215,33 +3175,6 @@ function App() {
               ))}
             </div>
           </motion.div>
-        </div>
-      </section>
-
-      <section id="projekty" className="bg-ink py-20 text-cream sm:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div {...fadeUp()} className="max-w-3xl">
-            <p className="eyebrow text-gold">{t("projectsEyebrow")}</p>
-            <h2 className="section-title">{t("projectsTitle")}</h2>
-          </motion.div>
-          <div className="mt-12 grid gap-4 lg:grid-cols-3">
-            {projects.map((project, index) => (
-              <motion.article
-                key={project.title}
-                {...fadeUp(index * 0.08)}
-                className="group rounded-[8px] border border-cream/10 bg-cream/[0.06] p-6 transition duration-500 hover:-translate-y-2 hover:bg-cream/[0.1]"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="rounded-full bg-gold/15 px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-gold">
-                    {project.label}
-                  </span>
-                  <ArrowUpRight className="text-cream/40 transition group-hover:text-gold" />
-                </div>
-                <h3 className="mt-20 font-serif text-4xl">{project.title}</h3>
-                <p className="mt-5 leading-7 text-cream/68">{project.copy}</p>
-              </motion.article>
-            ))}
-          </div>
         </div>
       </section>
 
