@@ -3017,20 +3017,20 @@ function App() {
         </div>
       </section>
 
-      <section className="bg-porcelain py-4">
-        <div className="mx-auto grid max-w-7xl gap-px overflow-hidden rounded-[8px] border border-forest/10 bg-forest/10 px-4 sm:px-6 md:grid-cols-4 lg:px-8">
+      <section className="bg-forest py-5">
+        <div className="mx-auto grid max-w-7xl gap-px overflow-hidden rounded-[8px] border border-cream/10 bg-cream/10 px-4 sm:px-6 md:grid-cols-4 lg:px-8">
           {quickPaths.map(([Icon, title, copy, href]) => (
             <a
               key={title}
               href={href}
-              className="group bg-white/78 p-5 transition hover:bg-forest hover:text-cream"
+              className="group bg-cream/[0.06] p-5 text-cream transition hover:bg-cream hover:text-ink"
             >
               <div className="flex items-start justify-between gap-4">
-                <Icon className="text-forest transition group-hover:text-gold" size={22} />
-                <ArrowUpRight className="text-ink/25 transition group-hover:text-gold" size={18} />
+                <Icon className="text-gold transition group-hover:text-forest" size={22} />
+                <ArrowUpRight className="text-cream/35 transition group-hover:text-forest" size={18} />
               </div>
               <h2 className="mt-6 text-lg font-black leading-tight">{title}</h2>
-              <p className="mt-2 text-sm font-semibold leading-6 text-ink/58 transition group-hover:text-cream/70">
+              <p className="mt-2 text-sm font-semibold leading-6 text-cream/64 transition group-hover:text-ink/62">
                 {copy}
               </p>
             </a>
@@ -3179,33 +3179,35 @@ function App() {
       </section>
 
       {!sectionHidden.courses && (
-      <section id="inicjatywy" className="bg-porcelain py-20 sm:py-28">
+      <section id="inicjatywy" className="bg-forest py-20 text-cream sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             {...fadeUp()}
             className="grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-end"
           >
             <div>
-              <p className="eyebrow">{t("coursesEyebrow")}</p>
+              <p className="eyebrow text-gold">{t("coursesEyebrow")}</p>
               <h2 className="section-title">{t("coursesTitle")}</h2>
             </div>
-            <p className="lead">{t("coursesLead")}</p>
+            <p className="text-xl leading-8 text-cream/72 sm:text-2xl sm:leading-9">
+              {t("coursesLead")}
+            </p>
           </motion.div>
           <div className="mt-12 grid gap-4 lg:grid-cols-3">
             {courseCards.map(([Icon, title, forWhom, gives, start], index) => (
               <motion.article
                 key={title}
                 {...fadeUp(index * 0.07)}
-                className="flex min-h-[440px] flex-col rounded-[8px] border border-forest/10 bg-white/78 p-6 shadow-panel"
+                className="group flex min-h-[440px] flex-col rounded-[8px] border border-cream/10 bg-cream/[0.08] p-6 shadow-panel transition hover:-translate-y-1 hover:bg-cream hover:text-ink"
               >
-                <Icon className="text-forest" />
+                <Icon className="text-gold" />
                 <h3 className="mt-12 font-serif text-4xl font-bold leading-tight">
                   {title}
                 </h3>
                 <div className="mt-8 grid flex-1 gap-4">
                   {[forWhom, gives, start].map((item) => (
-                    <div key={item} className="border-t border-ink/10 pt-4">
-                      <p className="text-base font-bold leading-7 text-ink/68">
+                    <div key={item} className="border-t border-cream/12 pt-4 transition group-hover:border-ink/10">
+                      <p className="text-base font-bold leading-7 text-cream/68 transition group-hover:text-ink/68">
                         {item}
                       </p>
                     </div>
@@ -3213,7 +3215,7 @@ function App() {
                 </div>
                 <a
                   href="#kontakt"
-                  className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-forest px-5 py-4 text-sm font-black text-cream transition hover:-translate-y-1 hover:bg-ink"
+                  className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-gold px-5 py-4 text-sm font-black text-ink transition hover:-translate-y-1 hover:bg-cream"
                 >
                   {t("contactButton")}
                   <ArrowUpRight size={18} />
