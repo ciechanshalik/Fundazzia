@@ -27,8 +27,10 @@ export default async function handler(request, response) {
       ["Język", message.lang || "-"],
       ["Imię", message.name || "-"],
       ["Kontakt", message.email || "-"],
+      ["Telefon", message.phone || "-"],
       ["Temat", message.purpose || "-"],
       ["Dziecko", message.child || "-"],
+      ["Zgoda na kontakt", message.consent || "-"],
       ["Wiadomość", message.message || "-"]
     ];
     const html = `

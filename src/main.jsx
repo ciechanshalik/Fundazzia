@@ -932,6 +932,23 @@ const uiText = {
     backToHome: "Wróć na stronę",
     newsCount: "wpisów",
     noNewsArchive: "Pierwsze aktualności pojawią się tutaj wkrótce.",
+    courseFormEyebrow: "Zapisy z Instagrama",
+    courseFormTitle: "Zapisz dziecko na kurs.",
+    courseFormLead: "Zostaw kontakt, wybierz kurs i napisz wiek dziecka. Odezwę się z informacją o grupach, terminach i najbliższych miejscach.",
+    courseFormParentName: "Imię i nazwisko rodzica",
+    courseFormEmail: "Email",
+    courseFormPhone: "Nr telefonu",
+    courseFormChildAge: "Wiek dziecka",
+    courseFormCourse: "Wybierz kurs",
+    courseFormOption1: "kurs ósmoklasisty z angielskiego",
+    courseFormOption2: "kurs angielskiego dla dzieci",
+    courseFormOption3: "kurs szwedzkiego od podstaw",
+    courseFormMessage: "Uwagi / preferowane godziny",
+    courseFormMessagePlaceholder: "Np. dziecko jest w 7 klasie, najlepiej popołudnia.",
+    courseFormConsent: "Zgadzam się na kontakt w sprawie zapisu na kurs.",
+    courseFormButton: "Wyślij zgłoszenie",
+    courseFormSuccess: "Dziękuję, zgłoszenie wysłane. Odezwę się najszybciej jak mogę.",
+    courseFormMissing: "Uzupełnij wymagane pola i zaznacz zgodę na kontakt.",
     close: "Zamknij",
     visible: "widoczna",
     hidden: "ukryta",
@@ -958,6 +975,23 @@ const uiText = {
     backToHome: "Back to website",
     newsCount: "posts",
     noNewsArchive: "The first updates will appear here soon.",
+    courseFormEyebrow: "Instagram sign-up",
+    courseFormTitle: "Sign a child up for a course.",
+    courseFormLead: "Leave your contact details, choose a course and add the child's age. We will get back to you with groups, dates and available places.",
+    courseFormParentName: "Parent or guardian name",
+    courseFormEmail: "Email",
+    courseFormPhone: "Phone number",
+    courseFormChildAge: "Child's age",
+    courseFormCourse: "Choose a course",
+    courseFormOption1: "English 8th-grade exam course",
+    courseFormOption2: "English course for children",
+    courseFormOption3: "Swedish for beginners",
+    courseFormMessage: "Notes / preferred times",
+    courseFormMessagePlaceholder: "E.g. grade 7, afternoons work best.",
+    courseFormConsent: "I agree to be contacted about the course sign-up.",
+    courseFormButton: "Send application",
+    courseFormSuccess: "Thank you, the application has been sent. We will get back to you as soon as possible.",
+    courseFormMissing: "Fill in the required fields and accept contact consent.",
     close: "Close",
     visible: "visible",
     hidden: "hidden",
@@ -984,6 +1018,23 @@ const uiText = {
     backToHome: "Zurück zur Website",
     newsCount: "Beiträge",
     noNewsArchive: "Die ersten Neuigkeiten erscheinen hier bald.",
+    courseFormEyebrow: "Anmeldung über Instagram",
+    courseFormTitle: "Melde ein Kind für einen Kurs an.",
+    courseFormLead: "Hinterlasse Kontakt, wähle einen Kurs und gib das Alter des Kindes an. Wir melden uns mit Gruppen, Terminen und freien Plätzen.",
+    courseFormParentName: "Name des Elternteils",
+    courseFormEmail: "E-Mail",
+    courseFormPhone: "Telefonnummer",
+    courseFormChildAge: "Alter des Kindes",
+    courseFormCourse: "Kurs wählen",
+    courseFormOption1: "Englischkurs für die Prüfung der 8. Klasse",
+    courseFormOption2: "Englischkurs für Kinder",
+    courseFormOption3: "Schwedisch für Anfänger",
+    courseFormMessage: "Hinweise / bevorzugte Zeiten",
+    courseFormMessagePlaceholder: "Z.B. 7. Klasse, am besten nachmittags.",
+    courseFormConsent: "Ich stimme der Kontaktaufnahme zur Kursanmeldung zu.",
+    courseFormButton: "Anmeldung senden",
+    courseFormSuccess: "Danke, die Anmeldung wurde gesendet. Wir melden uns so schnell wie möglich.",
+    courseFormMissing: "Fülle die Pflichtfelder aus und bestätige die Kontaktzustimmung.",
     close: "Schließen",
     visible: "sichtbar",
     hidden: "ausgeblendet",
@@ -1276,6 +1327,7 @@ function App() {
   const [sectionsReady, setSectionsReady] = React.useState(!cmsAvailable);
   const [isUploadingImage, setIsUploadingImage] = React.useState(false);
   const [signupStatus, setSignupStatus] = React.useState("");
+  const [courseFormStatus, setCourseFormStatus] = React.useState("");
   const [contactStatus, setContactStatus] = React.useState("");
   const [isTestingCms, setIsTestingCms] = React.useState(false);
   const [isPublishingCms, setIsPublishingCms] = React.useState(false);
@@ -1292,6 +1344,10 @@ function App() {
   const [isNewsArchivePage, setIsNewsArchivePage] = React.useState(
     new URLSearchParams(window.location.search).get("news") === "archive"
   );
+  const [isCourseFormPage, setIsCourseFormPage] = React.useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("form") === "course" || params.get("zapisy") === "kursy";
+  });
   const [isLoggedIn, setIsLoggedIn] = React.useState(
     window.localStorage.getItem("zulawscy-admin") === "true"
   );
@@ -1559,6 +1615,9 @@ function App() {
       setIsPanelOpen(window.location.hash === "#panel");
       setIsLegalPage(params.get("legal") === "privacy");
       setIsNewsArchivePage(params.get("news") === "archive");
+      setIsCourseFormPage(
+        params.get("form") === "course" || params.get("zapisy") === "kursy"
+      );
     };
 
     const handleClick = () => window.setTimeout(syncRouteState, 0);
@@ -1791,6 +1850,68 @@ function App() {
       form.reset();
     } catch (error) {
       setSignupStatus(`Nie udało się zapisać zgłoszenia: ${error.message}`);
+    }
+  }
+
+  async function handleCourseFormSubmit(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const parentName = formData.get("name")?.toString().trim() || "";
+    const parentEmail = formData.get("email")?.toString().trim() || "";
+    const parentPhone = formData.get("phone")?.toString().trim() || "";
+    const childAge = formData.get("childAge")?.toString().trim() || "";
+    const course = formData.get("course")?.toString().trim() || "";
+    const note = formData.get("message")?.toString().trim() || "";
+    const consent = formData.get("consent") === "yes";
+
+    if (!parentName || !parentEmail || !parentPhone || !childAge || !course || !consent) {
+      setCourseFormStatus(u("courseFormMissing"));
+      return;
+    }
+
+    if (!cmsAvailable) {
+      setCourseFormStatus("Formularz wymaga aktywnego CMS Supabase.");
+      return;
+    }
+
+    const message = [
+      `Telefon: ${parentPhone}`,
+      `Źródło: formularz z linku Instagram`,
+      consent ? "Zgoda na kontakt: tak" : "Zgoda na kontakt: nie",
+      note ? `Uwagi: ${note}` : ""
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    const cmsPayload = {
+      type: "signup",
+      lang,
+      name: parentName,
+      email: parentEmail,
+      purpose: course,
+      child: childAge,
+      message
+    };
+    const emailPayload = {
+      ...cmsPayload,
+      phone: parentPhone,
+      consent: consent ? "tak" : "nie"
+    };
+
+    try {
+      await saveContactMessageToCms(cmsPayload);
+      try {
+        await sendFormEmail(emailPayload);
+        setCourseFormStatus(u("courseFormSuccess"));
+      } catch (error) {
+        setCourseFormStatus(
+          `Zgłoszenie zapisane w CMS, ale email nie wyszedł: ${error.message}`
+        );
+      }
+      form.reset();
+    } catch (error) {
+      setCourseFormStatus(`Nie udało się zapisać zgłoszenia: ${error.message}`);
     }
   }
 
@@ -2039,6 +2160,173 @@ function App() {
               <p className="text-lg font-bold text-forest">{u("noNewsArchive")}</p>
             </div>
           )}
+        </section>
+      </main>
+    );
+  }
+
+  if (isCourseFormPage) {
+    return (
+      <main className="min-h-screen bg-porcelain text-ink">
+        <header className="border-b border-ink/10 bg-porcelain/95">
+          <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
+            <a href="/" className="flex items-center gap-3 text-sm font-black text-forest">
+              <span className="grid h-10 w-10 place-items-center overflow-hidden rounded-full bg-white shadow-sm">
+                <img
+                  src={logo}
+                  alt="Logo Fundacji Żuławscy Nobliści"
+                  className="h-9 w-9 object-contain"
+                />
+              </span>
+              <span className="hidden sm:inline">{t("brand")}</span>
+            </a>
+            <div className="flex items-center gap-1 rounded-full border border-forest/10 bg-white p-1 shadow-sm">
+              {languages.map(([code, label]) => (
+                <button
+                  key={code}
+                  type="button"
+                  onClick={() => setLang(code)}
+                  className={`rounded-full px-3 py-1.5 text-[0.68rem] font-black transition ${
+                    lang === code
+                      ? "bg-forest text-cream"
+                      : "text-forest/55 hover:text-forest"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </header>
+
+        <section className="relative overflow-hidden px-4 py-10 sm:px-6 sm:py-16">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(196,164,91,0.16),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(40,87,70,0.12),transparent_32%)]" />
+          <div className="relative mx-auto grid max-w-6xl gap-8 lg:grid-cols-[.92fr_1.08fr] lg:items-center">
+            <div className="py-6 lg:py-12">
+              <p className="eyebrow">{u("courseFormEyebrow")}</p>
+              <h1 className="mt-5 max-w-3xl font-serif text-[clamp(3.2rem,8vw,7rem)] font-extrabold leading-[0.9] text-forest">
+                {u("courseFormTitle")}
+              </h1>
+              <p className="mt-6 max-w-xl text-lg font-semibold leading-8 text-ink/62">
+                {u("courseFormLead")}
+              </p>
+              <div className="mt-8 flex flex-wrap gap-2">
+                {[
+                  u("courseFormOption1"),
+                  u("courseFormOption2"),
+                  u("courseFormOption3")
+                ].map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-forest/10 bg-white/75 px-4 py-2 text-xs font-black text-forest shadow-sm"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <form
+              onSubmit={handleCourseFormSubmit}
+              className="rounded-[8px] border border-forest/10 bg-white/82 p-5 shadow-panel backdrop-blur sm:p-7"
+            >
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="block text-sm font-bold text-ink/70 sm:col-span-2">
+                  {u("courseFormParentName")}
+                  <input
+                    name="name"
+                    required
+                    autoComplete="name"
+                    className="mt-2 w-full rounded-[8px] border border-ink/10 bg-porcelain px-4 py-4 text-base text-ink outline-none transition focus:border-gold"
+                  />
+                </label>
+                <label className="block text-sm font-bold text-ink/70">
+                  {u("courseFormEmail")}
+                  <input
+                    name="email"
+                    type="email"
+                    required
+                    autoComplete="email"
+                    className="mt-2 w-full rounded-[8px] border border-ink/10 bg-porcelain px-4 py-4 text-base text-ink outline-none transition focus:border-gold"
+                  />
+                </label>
+                <label className="block text-sm font-bold text-ink/70">
+                  {u("courseFormPhone")}
+                  <input
+                    name="phone"
+                    type="tel"
+                    required
+                    autoComplete="tel"
+                    className="mt-2 w-full rounded-[8px] border border-ink/10 bg-porcelain px-4 py-4 text-base text-ink outline-none transition focus:border-gold"
+                  />
+                </label>
+                <label className="block text-sm font-bold text-ink/70">
+                  {u("courseFormChildAge")}
+                  <input
+                    name="childAge"
+                    required
+                    inputMode="numeric"
+                    className="mt-2 w-full rounded-[8px] border border-ink/10 bg-porcelain px-4 py-4 text-base text-ink outline-none transition focus:border-gold"
+                  />
+                </label>
+                <label className="block text-sm font-bold text-ink/70">
+                  {u("courseFormCourse")}
+                  <select
+                    name="course"
+                    required
+                    defaultValue=""
+                    className="mt-2 w-full rounded-[8px] border border-ink/10 bg-porcelain px-4 py-4 text-base text-ink outline-none transition focus:border-gold"
+                  >
+                    <option value="" disabled>
+                      {u("courseFormCourse")}
+                    </option>
+                    <option>{u("courseFormOption1")}</option>
+                    <option>{u("courseFormOption2")}</option>
+                    <option>{u("courseFormOption3")}</option>
+                  </select>
+                </label>
+                <label className="block text-sm font-bold text-ink/70 sm:col-span-2">
+                  {u("courseFormMessage")}
+                  <textarea
+                    name="message"
+                    rows="4"
+                    placeholder={u("courseFormMessagePlaceholder")}
+                    className="mt-2 w-full rounded-[8px] border border-ink/10 bg-porcelain px-4 py-4 text-base text-ink outline-none transition focus:border-gold"
+                  />
+                </label>
+              </div>
+
+              <label className="mt-5 flex gap-3 text-sm font-bold leading-6 text-ink/62">
+                <input
+                  name="consent"
+                  value="yes"
+                  type="checkbox"
+                  required
+                  className="mt-1 h-5 w-5 rounded border-ink/20 accent-forest"
+                />
+                <span>
+                  {u("courseFormConsent")}{" "}
+                  <a
+                    href="/?legal=privacy"
+                    className="font-black text-forest underline decoration-gold underline-offset-4"
+                  >
+                    {u("termsAndPrivacy")}
+                  </a>
+                </span>
+              </label>
+
+              <button
+                type="submit"
+                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-forest px-6 py-4 text-sm font-black text-cream transition hover:-translate-y-1 hover:bg-ink"
+              >
+                {u("courseFormButton")}
+                <Send size={18} />
+              </button>
+              {courseFormStatus && (
+                <p className="mt-4 text-sm font-bold text-forest">{courseFormStatus}</p>
+              )}
+            </form>
+          </div>
         </section>
       </main>
     );
