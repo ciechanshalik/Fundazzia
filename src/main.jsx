@@ -15,7 +15,6 @@ import {
   MapPin,
   Menu,
   Plus,
-  Quote,
   RotateCcw,
   Send,
   Sparkles,
@@ -65,7 +64,6 @@ const defaultHiddenSections = {
 const sectionControls = [
   ["enrollment", "Zapisy / najbliższy start"],
   ["parents", "Dla rodziców"],
-  ["voices", "Głosy"],
   ["courses", "Inicjatywy"],
   ["partners", "Partnerzy"],
   ["packages", "Pakiety partnerskie"],
@@ -243,16 +241,6 @@ const defaultTexts = {
   educationItem3: "warsztaty, poprawianie umiejętności i poszerzanie horyzontów",
   educationItem4:
     "wsparcie w rekrutacji na studia, staże i programy europejskie",
-  voicesEyebrow: "Głosy",
-  voicesTitle: "To zostaje w ludziach dłużej niż jedno wydarzenie.",
-  quote1: "Pierwszy raz poczułam, że moje małe miasto nie jest ograniczeniem, tylko punktem startu.",
-  quote1Name: "Maja, wolontariuszka",
-  quote2:
-    "Tu nikt nie mówi młodym, żeby czekali na swoją kolej. Dostają narzędzia, zaufanie i realną odpowiedzialność.",
-  quote2Name: "Paweł, mentor",
-  quote3:
-    "Erasmus z fundacją zmienił mi mapę w głowie. Nagle Europa była rozmową, a nie hasłem z podręcznika.",
-  quote3Name: "Oliwier, uczestnik",
   volunteersEyebrow: "Wolontariusze",
   volunteersTitle: "Najważniejsza technologia to zaufanie do młodych.",
   volunteer1: "prowadzenie wydarzeń i warsztatów",
@@ -443,17 +431,6 @@ const localizedTextOverrides = {
     educationItem2: "mentoring for students and young leaders",
     educationItem3: "workshops, skill-building and broadening horizons",
     educationItem4: "support with studies, internships and European opportunities",
-    voicesEyebrow: "Voices",
-    voicesTitle: "It stays with people longer than one event.",
-    quote1:
-      "For the first time, I felt my small town was not a limitation, but a starting point.",
-    quote1Name: "Maja, volunteer",
-    quote2:
-      "Here nobody tells young people to wait their turn. They get tools, trust and real responsibility.",
-    quote2Name: "Paweł, mentor",
-    quote3:
-      "Erasmus with the foundation changed the map in my head. Suddenly Europe was a conversation, not a textbook word.",
-    quote3Name: "Oliwier, participant",
     volunteersEyebrow: "Volunteers",
     volunteersTitle: "The most important technology is trust in young people.",
     volunteer1: "leading events and workshops",
@@ -639,17 +616,6 @@ const localizedTextOverrides = {
     educationItem2: "Mentoring für Schüler und junge Leader",
     educationItem3: "Workshops, Kompetenzaufbau und neue Horizonte",
     educationItem4: "Unterstützung bei Studium, Praktika und europäischen Chancen",
-    voicesEyebrow: "Stimmen",
-    voicesTitle: "Es bleibt länger als ein einzelnes Ereignis.",
-    quote1:
-      "Zum ersten Mal spürte ich, dass meine kleine Stadt keine Grenze ist, sondern ein Startpunkt.",
-    quote1Name: "Maja, Freiwillige",
-    quote2:
-      "Hier sagt niemand jungen Menschen, sie sollen warten. Sie bekommen Werkzeuge, Vertrauen und echte Verantwortung.",
-    quote2Name: "Paweł, Mentor",
-    quote3:
-      "Erasmus mit der Stiftung hat die Karte in meinem Kopf verändert. Europa wurde ein Gespräch, kein Begriff aus dem Buch.",
-    quote3Name: "Oliwier, Teilnehmer",
     volunteersEyebrow: "Freiwillige",
     volunteersTitle: "Die wichtigste Technologie ist Vertrauen in junge Menschen.",
     volunteer1: "Events und Workshops leiten",
@@ -1058,7 +1024,6 @@ const textEditorGroups = [
   ["Zapisy", ["enrollmentEyebrow", "enrollmentTitle", "enrollmentLead", "start1Label", "start1Value", "start1Copy", "start2Label", "start2Value", "start2Copy", "start3Label", "start3Value", "start3Copy", "signupTitle", "signupNameLabel", "signupNamePlaceholder", "signupPhoneLabel", "signupPhonePlaceholder", "signupCourseLabel", "signupCourseOption1", "signupCourseOption2", "signupCourseOption3", "signupChildLabel", "signupChildPlaceholder", "signupMessageLabel", "signupMessagePlaceholder", "signupButton"]],
   ["Rodzice", ["parentsEyebrow", "parentsTitle", "parentsLead", "parent1Title", "parent1Copy", "parent2Title", "parent2Copy", "parent3Title", "parent3Copy"]],
   ["Edukacja", ["educationEyebrow", "educationImageText", "educationTitle", "educationItem1", "educationItem2", "educationItem3", "educationItem4"]],
-  ["Głosy", ["voicesEyebrow", "voicesTitle", "quote1", "quote1Name", "quote2", "quote2Name", "quote3", "quote3Name"]],
   ["Wolontariusze", ["volunteersEyebrow", "volunteersTitle", "volunteer1", "volunteer2", "volunteer3", "volunteer4"]],
   ["Dołącz", ["joinEyebrow", "joinTitle", "joinStudentTitle", "joinStudentCopy", "joinVolunteerTitle", "joinVolunteerCopy", "joinPartnerTitle", "joinPartnerCopy"]],
   ["Partnerzy", ["partnersEyebrow", "partnersTitle", "partner1", "partner2", "partner3", "partner4", "partner5", "partner6"]],
@@ -1107,9 +1072,6 @@ function loadSectionHidden() {
     if (!saved) return defaultHiddenSections;
 
     const parsed = JSON.parse(saved);
-    if (parsed.__version !== sectionVisibilityVersion) {
-      delete parsed.voices;
-    }
 
     return {
       ...defaultHiddenSections,
@@ -1378,11 +1340,6 @@ function App() {
     const visibilityKey = navVisibilityKey[item.id];
     return !visibilityKey || !sectionHidden[visibilityKey];
   });
-  const testimonials = [
-    { quote: t("quote1"), name: t("quote1Name") },
-    { quote: t("quote2"), name: t("quote2Name") },
-    { quote: t("quote3"), name: t("quote3Name") }
-  ];
   const partners = [
     t("partner1"),
     t("partner2"),
@@ -3429,34 +3386,6 @@ function App() {
           ))}
         </div>
       </section>
-
-      {!sectionHidden.voices && (
-        <section className="bg-porcelain py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <motion.div {...fadeUp()} className="max-w-3xl">
-              <p className="eyebrow">{t("voicesEyebrow")}</p>
-              <h2 className="section-title">{t("voicesTitle")}</h2>
-            </motion.div>
-            <div className="mt-12 grid gap-4 lg:grid-cols-3">
-              {testimonials.map((item, index) => (
-                <motion.figure
-                  key={item.name}
-                  {...fadeUp(index * 0.07)}
-                  className="rounded-[8px] border border-forest/10 bg-white/70 p-6 shadow-panel"
-                >
-                  <Quote className="text-gold" />
-                  <blockquote className="mt-10 text-2xl font-semibold leading-tight">
-                    “{item.quote}”
-                  </blockquote>
-                  <figcaption className="mt-8 text-sm font-black uppercase tracking-[0.16em] text-forest/70">
-                    {item.name}
-                  </figcaption>
-                </motion.figure>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {!sectionHidden.volunteers && (
       <section className="bg-cream py-20 sm:py-28">
