@@ -301,9 +301,9 @@ const defaultTexts = {
   partner5: "Uniwersytety",
   partner6: "Lokalny biznes",
   packagesEyebrow: "Pakiety partnerskie",
-  packagesTitle: "Wspierasz młodych. Dostajesz historię, którą naprawdę warto opowiedzieć.",
+  packagesTitle: "Jedno konkretne wsparcie. Jedna realna zmiana.",
   packagesLead:
-    "Trzy proste poziomy współpracy dla firm, instytucji i lokalnych liderów, którzy chcą pomóc młodym ludziom z Żuław zobaczyć więcej świata.",
+    "Szukamy partnerów, którzy chcą zamienić deklarację w doświadczenie: sfinansować dziecku wyjazd na obóz językowy i otworzyć mu kawałek świata.",
   coursesEyebrow: "Kursy",
   coursesTitle: "Konkretne wsparcie na teraz.",
   coursesLead:
@@ -357,13 +357,13 @@ const defaultTexts = {
   parent2Copy: "kontakt po zgłoszeniu, dopasowanie poziomu i proste informacje",
   parent3Title: "Mniej stresu",
   parent3Copy: "porządek, rytm i atmosfera, która pomaga wrócić do wiary w siebie",
-  package1Name: "Partner Główny",
-  package1Price: "ufundowanie trzech wyjazdów na obóz językowy",
-  package1For: "dla marek, które chcą być widoczną częścią ruchu",
-  package1Item1: "logo i podziękowanie w kluczowych materiałach",
-  package1Item2: "wspólna historia do social mediów",
-  package1Item3: "obecność przy wybranym wydarzeniu lub cyklu",
-  package1Item4: "raport z efektami i zdjęciami",
+  package1Name: "Partner strategiczny",
+  package1Price: "ufundowanie wyjazdu na obóz językowy dla jednego dziecka",
+  package1For: "dla firm i osób, które chcą pomóc konkretnie, bez nadęcia i pustych gestów",
+  package1Item1: "realne wsparcie jednego dziecka",
+  package1Item2: "podziękowanie w komunikacji fundacji",
+  package1Item3: "krótka historia pokazująca sens wsparcia",
+  package1Item4: "informacja zwrotna po zakończeniu działania",
   package2Name: "Partner Rozwoju",
   package2Price: "ufundowanie dwóch wyjazdów na obóz językowy",
   package2For: "dla firm, które chcą wesprzeć konkretną ścieżkę edukacyjną",
@@ -502,9 +502,9 @@ const localizedTextOverrides = {
     partner5: "Universities",
     partner6: "Local business",
     packagesEyebrow: "Partnership packages",
-    packagesTitle: "Support young people. Get a story worth telling.",
+    packagesTitle: "One concrete support. One real change.",
     packagesLead:
-      "Three simple levels of cooperation for companies, institutions and local leaders who want to help young people from Żuławy see more of the world.",
+      "We are looking for partners who want to turn support into experience: fund a child’s language camp trip and open a piece of the world.",
     coursesEyebrow: "Courses",
     coursesTitle: "Concrete support for right now.",
     coursesLead:
@@ -558,13 +558,13 @@ const localizedTextOverrides = {
     parent2Copy: "follow-up after applying, level matching and simple information",
     parent3Title: "Less stress",
     parent3Copy: "structure, rhythm and an atmosphere that helps rebuild confidence",
-    package1Name: "Main Partner",
-    package1Price: "funding three language camp trips",
-    package1For: "for brands that want to be a visible part of the movement",
-    package1Item1: "logo and thanks in key materials",
-    package1Item2: "a shared story for social media",
-    package1Item3: "presence at a selected event or cycle",
-    package1Item4: "impact report with photos",
+    package1Name: "Strategic Partner",
+    package1Price: "funding a language camp trip for one child",
+    package1For: "for companies and people who want to help concretely, without empty gestures",
+    package1Item1: "real support for one child",
+    package1Item2: "a thank-you mention in foundation communication",
+    package1Item3: "a short story showing the meaning of the support",
+    package1Item4: "feedback after the activity is completed",
     package2Name: "Growth Partner",
     package2Price: "funding two language camp trips",
     package2For: "for companies supporting a concrete educational path",
@@ -698,9 +698,9 @@ const localizedTextOverrides = {
     partner5: "Universitäten",
     partner6: "Lokale Unternehmen",
     packagesEyebrow: "Partnerpakete",
-    packagesTitle: "Unterstütze junge Menschen. Erzähle eine Geschichte, die zählt.",
+    packagesTitle: "Eine konkrete Hilfe. Eine echte Veränderung.",
     packagesLead:
-      "Drei einfache Kooperationsstufen für Firmen, Institutionen und lokale Leader, die jungen Menschen aus Żuławy mehr Welt zeigen wollen.",
+      "Wir suchen Partner, die Unterstützung in Erfahrung verwandeln möchten: eine Sprachcamp-Reise für ein Kind finanzieren und ein Stück Welt öffnen.",
     coursesEyebrow: "Kurse",
     coursesTitle: "Konkrete Unterstützung für jetzt.",
     coursesLead:
@@ -754,13 +754,13 @@ const localizedTextOverrides = {
     parent2Copy: "Rückmeldung nach Anmeldung, Niveauabgleich und einfache Infos",
     parent3Title: "Weniger Stress",
     parent3Copy: "Struktur, Rhythmus und eine Atmosphäre, die Selbstvertrauen stärkt",
-    package1Name: "Hauptpartner",
-    package1Price: "Finanzierung von drei Sprachcamp-Reisen",
-    package1For: "für Marken, die sichtbar Teil der Bewegung sein wollen",
-    package1Item1: "Logo und Dank in wichtigen Materialien",
-    package1Item2: "gemeinsame Story für Social Media",
-    package1Item3: "Präsenz bei einer ausgewählten Aktion",
-    package1Item4: "Wirkungsbericht mit Fotos",
+    package1Name: "Strategischer Partner",
+    package1Price: "Finanzierung einer Sprachcamp-Reise für ein Kind",
+    package1For: "für Firmen und Menschen, die konkret helfen möchten, ohne leere Gesten",
+    package1Item1: "reale Unterstützung für ein Kind",
+    package1Item2: "Dank in der Kommunikation der Stiftung",
+    package1Item3: "eine kurze Geschichte über den Sinn der Unterstützung",
+    package1Item4: "Rückmeldung nach Abschluss der Aktivität",
     package2Name: "Entwicklungspartner",
     package2Price: "Finanzierung von zwei Sprachcamp-Reisen",
     package2For: "für Firmen, die einen konkreten Bildungsweg unterstützen",
@@ -833,6 +833,28 @@ function normalizeCmsTexts(lang, remoteTexts) {
     }
   });
 
+  if (
+    [
+      "Partner Główny",
+      "Main Partner",
+      "Hauptpartner"
+    ].includes(normalized.package1Name)
+  ) {
+    [
+      "packagesTitle",
+      "packagesLead",
+      "package1Name",
+      "package1Price",
+      "package1For",
+      "package1Item1",
+      "package1Item2",
+      "package1Item3",
+      "package1Item4"
+    ].forEach((key) => {
+      normalized[key] = defaults[key];
+    });
+  }
+
   if (normalized.contactEmail === "kontakt@zulawscynoblisci.pl") {
     normalized.contactEmail = defaults.contactEmail;
   }
@@ -885,7 +907,7 @@ const uiText = {
     partnership: "partnerstwo",
     strongest: "najmocniej",
     support: "Wsparcie",
-    letsTalk: "Porozmawiajmy",
+    letsTalk: "Działaj z nami",
     partnerships: "Partnerstwa",
     writeToUs: "Napisz do nas",
     defaultTexts: "Przywróć domyślne",
@@ -905,7 +927,7 @@ const uiText = {
     partnership: "partnership",
     strongest: "strongest",
     support: "Support",
-    letsTalk: "Let us talk",
+    letsTalk: "Act with us",
     partnerships: "Partnerships",
     writeToUs: "Write to us",
     defaultTexts: "Restore defaults",
@@ -925,7 +947,7 @@ const uiText = {
     partnership: "Partnerschaft",
     strongest: "stärkstes Paket",
     support: "Unterstützung",
-    letsTalk: "Lass uns reden",
+    letsTalk: "Handle mit uns",
     partnerships: "Partnerschaften",
     writeToUs: "Schreib uns",
     defaultTexts: "Standard wiederherstellen",
@@ -956,7 +978,7 @@ const textEditorGroups = [
   ["Wolontariusze", ["volunteersEyebrow", "volunteersTitle", "volunteer1", "volunteer2", "volunteer3", "volunteer4"]],
   ["Dołącz", ["joinEyebrow", "joinTitle", "joinStudentTitle", "joinStudentCopy", "joinVolunteerTitle", "joinVolunteerCopy", "joinPartnerTitle", "joinPartnerCopy"]],
   ["Partnerzy", ["partnersEyebrow", "partnersTitle", "partner1", "partner2", "partner3", "partner4", "partner5", "partner6"]],
-  ["Pakiety partnerskie", ["packagesEyebrow", "packagesTitle", "packagesLead", "package1Name", "package1Price", "package1For", "package1Item1", "package1Item2", "package1Item3", "package1Item4", "package2Name", "package2Price", "package2For", "package2Item1", "package2Item2", "package2Item3", "package2Item4", "package3Name", "package3Price", "package3For", "package3Item1", "package3Item2", "package3Item3", "package3Item4"]],
+  ["Pakiety partnerskie", ["packagesEyebrow", "packagesTitle", "packagesLead", "package1Name", "package1Price", "package1For", "package1Item1", "package1Item2", "package1Item3", "package1Item4"]],
   ["FAQ", ["faqEyebrow", "faqTitle", "faq1Question", "faq1Answer", "faq2Question", "faq2Answer", "faq3Question", "faq3Answer", "faq4Question", "faq4Answer"]],
   ["Kontakt", ["contactEyebrow", "contactTitle", "contactEmail", "contactPlace", "contactNameLabel", "contactNamePlaceholder", "contactEmailLabel", "contactEmailPlaceholder", "contactPurposeLabel", "contactPurposeOption1", "contactPurposeOption2", "contactPurposeOption3", "contactPurposeOption4", "contactMessageLabel", "contactMessagePlaceholder", "contactButton"]]
 ];
@@ -1310,44 +1332,17 @@ function App() {
     [HeartHandshake, t("joinVolunteerTitle"), t("joinVolunteerCopy")],
     [Globe2, t("joinPartnerTitle"), t("joinPartnerCopy")]
   ];
-  const partnerPackages = [
-    {
-      name: t("package1Name"),
-      price: t("package1Price"),
-      forWhom: t("package1For"),
-      featured: true,
-      items: [
-        t("package1Item1"),
-        t("package1Item2"),
-        t("package1Item3"),
-        t("package1Item4")
-      ]
-    },
-    {
-      name: t("package2Name"),
-      price: t("package2Price"),
-      forWhom: t("package2For"),
-      featured: false,
-      items: [
-        t("package2Item1"),
-        t("package2Item2"),
-        t("package2Item3"),
-        t("package2Item4")
-      ]
-    },
-    {
-      name: t("package3Name"),
-      price: t("package3Price"),
-      forWhom: t("package3For"),
-      featured: false,
-      items: [
-        t("package3Item1"),
-        t("package3Item2"),
-        t("package3Item3"),
-        t("package3Item4")
-      ]
-    }
-  ];
+  const strategicPackage = {
+    name: t("package1Name"),
+    price: t("package1Price"),
+    forWhom: t("package1For"),
+    items: [
+      t("package1Item1"),
+      t("package1Item2"),
+      t("package1Item3"),
+      t("package1Item4")
+    ]
+  };
   const courseCards = [
     [Globe2, t("course1Title"), t("course1For"), t("course1Gives"), t("course1Start")],
     [BookOpen, t("course2Title"), t("course2For"), t("course2Gives"), t("course2Start")],
@@ -3155,80 +3150,49 @@ function App() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             {...fadeUp()}
-            className="mx-auto max-w-4xl text-center"
+            className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-end"
           >
-            <p className="eyebrow">{t("packagesEyebrow")}</p>
-            <h2 className="section-title">{t("packagesTitle")}</h2>
-            <p className="lead mx-auto mt-6 max-w-3xl">{t("packagesLead")}</p>
+            <div>
+              <p className="eyebrow">{t("packagesEyebrow")}</p>
+              <h2 className="section-title">{t("packagesTitle")}</h2>
+            </div>
+            <p className="lead">{t("packagesLead")}</p>
           </motion.div>
 
-          <div className="mt-12 grid items-stretch gap-4 lg:grid-cols-3">
-            {partnerPackages.map((tier, index) => (
-              <motion.article
-                key={tier.name}
-                {...fadeUp(index * 0.07)}
-                className={`relative flex h-full min-h-[620px] flex-col rounded-[8px] border p-6 shadow-panel ${
-                  tier.featured
-                    ? "border-gold bg-forest text-cream"
-                    : "border-forest/10 bg-white/78"
-                }`}
-              >
-                <div className="flex min-h-[56px] items-center justify-between gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold/15 text-gold">
-                    <Sparkles size={22} />
-                  </div>
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-black uppercase tracking-[0.16em] ${
-                      tier.featured
-                        ? "bg-gold text-ink"
-                        : "bg-forest/10 text-forest"
-                    }`}
-                  >
-                    {tier.featured ? u("strongest") : u("partnership")}
+          <motion.article
+            {...fadeUp(0.08)}
+            className="mt-12 overflow-hidden rounded-[8px] border border-forest/10 bg-white/78 shadow-panel"
+          >
+            <div className="grid gap-px bg-forest/10 lg:grid-cols-[1fr_.9fr]">
+              <div className="bg-forest p-6 text-cream sm:p-8">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="rounded-full bg-gold px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-ink">
+                    {u("partnership")}
                   </span>
+                  <Sparkles className="text-gold" />
                 </div>
-                <div className="mt-8 min-h-[164px]">
-                  <h3 className="font-serif text-4xl font-bold leading-tight">
-                    {tier.name}
-                  </h3>
-                  <p
-                    className={`mt-4 text-sm font-bold leading-6 ${
-                      tier.featured ? "text-cream/68" : "text-ink/58"
-                    }`}
-                  >
-                    {tier.forWhom}
-                  </p>
-                </div>
-                <div
-                  className={`mt-2 rounded-[8px] border p-4 ${
-                    tier.featured
-                      ? "border-cream/10 bg-cream/[0.06]"
-                      : "border-forest/10 bg-porcelain"
-                  }`}
-                >
-                  <p className="text-xs font-black uppercase tracking-[0.16em] text-gold">
-                    {u("support")}
-                  </p>
-                  <p className="mt-3 max-w-sm text-pretty font-serif text-[clamp(1.65rem,3vw,2.65rem)] font-bold leading-[1.02] text-gold">
-                    {tier.price}
-                  </p>
-                </div>
-                <div
-                  className={`mt-6 grid flex-1 content-start gap-3 border-t pt-6 ${
-                    tier.featured ? "border-cream/10" : "border-ink/10"
-                  }`}
-                >
-                  {tier.items.map((item) => (
+                <h3 className="mt-12 max-w-2xl font-serif text-[clamp(2.4rem,6vw,5.5rem)] font-bold leading-[0.92]">
+                  {strategicPackage.name}
+                </h3>
+                <p className="mt-6 max-w-xl text-lg font-semibold leading-8 text-cream/70">
+                  {strategicPackage.forWhom}
+                </p>
+              </div>
+              <div className="bg-porcelain p-6 sm:p-8">
+                <p className="text-xs font-black uppercase tracking-[0.16em] text-gold">
+                  {u("support")}
+                </p>
+                <p className="mt-4 text-pretty font-serif text-[clamp(2rem,4.4vw,4.2rem)] font-bold leading-[0.96] text-forest">
+                  {strategicPackage.price}
+                </p>
+                <div className="mt-8 grid gap-3 border-t border-ink/10 pt-6">
+                  {strategicPackage.items.map((item) => (
                     <div key={item} className="flex gap-3">
                       <BadgeCheck
                         size={19}
                         className="mt-0.5 shrink-0 text-gold"
                       />
-                      <p
-                        className={`text-sm font-semibold leading-6 ${
-                          tier.featured ? "text-cream/75" : "text-ink/68"
-                        }`}
-                      >
+                      <p className="text-sm font-semibold leading-6 text-ink/68">
                         {item}
                       </p>
                     </div>
@@ -3236,18 +3200,14 @@ function App() {
                 </div>
                 <a
                   href="#kontakt"
-                  className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-4 text-sm font-black transition hover:-translate-y-1 ${
-                    tier.featured
-                      ? "bg-gold text-ink hover:bg-cream"
-                      : "bg-ink text-cream hover:bg-forest"
-                  }`}
+                  className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-5 py-4 text-sm font-black text-cream transition hover:-translate-y-1 hover:bg-forest sm:w-auto"
                 >
                   {u("letsTalk")}
                   <ArrowUpRight size={18} />
                 </a>
-              </motion.article>
-            ))}
-          </div>
+              </div>
+            </div>
+          </motion.article>
         </div>
       </section>
       )}
