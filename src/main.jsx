@@ -262,7 +262,7 @@ const defaultTexts = {
     "Nie opowiadamy tylko o przyszłości. Dajemy jej dotknąć.",
   educationItem1: "kursy językowe, które otwierają drzwi na szeroką Europę",
   educationItem2: "mentoring dla uczniów i młodych liderów",
-  educationItem3: "debaty, wystawy, podcasty i lokalne historie",
+  educationItem3: "warsztaty, poprawianie umiejętności i poszerzanie horyzontów",
   educationItem4:
     "wsparcie w rekrutacji na studia, staże i programy europejskie",
   voicesEyebrow: "Głosy",
@@ -463,7 +463,7 @@ const localizedTextOverrides = {
     educationTitle: "We do not only talk about the future. We let young people touch it.",
     educationItem1: "language courses that open doors to a wider Europe",
     educationItem2: "mentoring for students and young leaders",
-    educationItem3: "debates, exhibitions, podcasts and local stories",
+    educationItem3: "workshops, skill-building and broadening horizons",
     educationItem4: "support with studies, internships and European opportunities",
     voicesEyebrow: "Voices",
     voicesTitle: "It stays with people longer than one event.",
@@ -659,7 +659,7 @@ const localizedTextOverrides = {
     educationTitle: "Wir reden nicht nur über Zukunft. Wir machen sie spürbar.",
     educationItem1: "Sprachkurse, die Türen zu einem weiten Europa öffnen",
     educationItem2: "Mentoring für Schüler und junge Leader",
-    educationItem3: "Debatten, Ausstellungen, Podcasts und lokale Geschichten",
+    educationItem3: "Workshops, Kompetenzaufbau und neue Horizonte",
     educationItem4: "Unterstützung bei Studium, Praktika und europäischen Chancen",
     voicesEyebrow: "Stimmen",
     voicesTitle: "Es bleibt länger als ein einzelnes Ereignis.",
@@ -860,6 +860,16 @@ function normalizeCmsTexts(lang, remoteTexts) {
 
   if (normalized.contactEmail === "kontakt@zulawscynoblisci.pl") {
     normalized.contactEmail = defaults.contactEmail;
+  }
+
+  if (
+    [
+      "debaty, wystawy, podcasty i lokalne historie",
+      "debates, exhibitions, podcasts and local stories",
+      "Debatten, Ausstellungen, Podcasts und lokale Geschichten"
+    ].includes(normalized.educationItem3)
+  ) {
+    normalized.educationItem3 = defaults.educationItem3;
   }
 
   if (["Zostań wolontariuszem", "Become a volunteer", "Freiwillig mitmachen"].includes(normalized.heroSecondary)) {
