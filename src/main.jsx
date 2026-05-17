@@ -50,7 +50,7 @@ const navItems = [
   { id: "misja", label: { pl: "Misja", en: "Mission", de: "Mission" } },
   { id: "aktualnosci", label: { pl: "Aktualności", en: "News", de: "News" } },
   { id: "projekty", label: { pl: "Projekty", en: "Work", de: "Projekte" } },
-  { id: "kursy", label: { pl: "Kursy", en: "Courses", de: "Kurse" } },
+  { id: "inicjatywy", label: { pl: "Inicjatywy", en: "Initiatives", de: "Initiativen" } },
   { id: "zapisy", label: { pl: "Zapisy", en: "Sign up", de: "Anmeldung" } },
   { id: "edukacja", label: { pl: "Edukacja", en: "Education", de: "Bildung" } },
   { id: "pakiety-partnerskie", label: { pl: "Partnerstwa", en: "Partnerships", de: "Partner" } },
@@ -67,14 +67,14 @@ const sectionControls = [
   ["enrollment", "Zapisy / najbliższy start"],
   ["parents", "Dla rodziców"],
   ["voices", "Głosy"],
-  ["courses", "Kursy"],
+  ["courses", "Inicjatywy"],
   ["partners", "Partnerzy"],
   ["packages", "Pakiety partnerskie"],
   ["volunteers", "Wolontariusze"]
 ];
 
 const navVisibilityKey = {
-  kursy: "courses",
+  inicjatywy: "courses",
   zapisy: "enrollment",
   "pakiety-partnerskie": "packages"
 };
@@ -218,7 +218,7 @@ const defaultTexts = {
   heroTitle: "Z małych miejsc w wielki świat.",
   heroLead:
     "Jesteśmy nowoczesną fundacją edukacyjną z Żuław. Pokazujemy młodym ludziom, że ich start może być lokalny, ale horyzont nie musi mieć granic.",
-  heroPrimary: "Zobacz kursy",
+  heroPrimary: "Zobacz inicjatywy",
   heroSecondary: "Zapisz na angielski",
   quickPath1Title: "Angielski dla dzieci i młodzieży",
   quickPath1Copy: "małe grupy, swobodne mówienie i mniej stresu przy języku",
@@ -304,10 +304,10 @@ const defaultTexts = {
   packagesTitle: "Jedno konkretne wsparcie. Jedna realna zmiana.",
   packagesLead:
     "Szukamy partnerów, którzy chcą zamienić deklarację w doświadczenie: sfinansować dziecku wyjazd na obóz językowy i otworzyć mu kawałek świata.",
-  coursesEyebrow: "Kursy",
-  coursesTitle: "Konkretne wsparcie na teraz.",
+  coursesEyebrow: "Inicjatywy",
+  coursesTitle: "Działania, do których można dołączyć.",
   coursesLead:
-    "Języki, egzamin ósmoklasisty i warsztaty prowadzone tak, żeby młodzi czuli postęp, spokój i większą pewność.",
+    "Tu będą pojawiały się aktualne kursy, warsztaty, nabory i projekty, w które mogą wejść młodzi ludzie, rodzice, szkoły i partnerzy.",
   course1Title: "Angielski dla dzieci i młodzieży",
   course1For: "dla uczniów, którzy chcą mówić swobodniej i nadrobić braki bez wstydu",
   course1Gives: "małe grupy, nacisk na mówienie i spokojny kontakt z językiem",
@@ -420,7 +420,7 @@ const localizedTextOverrides = {
     heroTitle: "From small places to a wider world.",
     heroLead:
       "We are a modern educational foundation from Żuławy. We show young people that their start can be local, but their horizon does not have to be limited.",
-    heroPrimary: "See courses",
+    heroPrimary: "See initiatives",
     heroSecondary: "Sign up for English",
     quickPath1Title: "English for children and teens",
     quickPath1Copy: "small groups, freer speaking and less language stress",
@@ -505,10 +505,10 @@ const localizedTextOverrides = {
     packagesTitle: "One concrete support. One real change.",
     packagesLead:
       "We are looking for partners who want to turn support into experience: fund a child’s language camp trip and open a piece of the world.",
-    coursesEyebrow: "Courses",
-    coursesTitle: "Concrete support for right now.",
+    coursesEyebrow: "Initiatives",
+    coursesTitle: "Actions you can join.",
     coursesLead:
-      "Languages, 8th-grade exam preparation and workshops designed so young people feel progress, calm and confidence.",
+      "This is where current courses, workshops, calls and projects will appear for young people, parents, schools and partners.",
     course1Title: "English for children and teens",
     course1For: "for students who want to speak more freely and catch up without shame",
     course1Gives: "small groups, focus on speaking and a calmer relationship with English",
@@ -701,10 +701,10 @@ const localizedTextOverrides = {
     packagesTitle: "Eine konkrete Hilfe. Eine echte Veränderung.",
     packagesLead:
       "Wir suchen Partner, die Unterstützung in Erfahrung verwandeln möchten: eine Sprachcamp-Reise für ein Kind finanzieren und ein Stück Welt öffnen.",
-    coursesEyebrow: "Kurse",
-    coursesTitle: "Konkrete Unterstützung für jetzt.",
+    coursesEyebrow: "Initiativen",
+    coursesTitle: "Angebote, bei denen man mitmachen kann.",
     coursesLead:
-      "Sprachen, Vorbereitung auf die Prüfung der 8. Klasse und Workshops, damit junge Menschen Fortschritt, Ruhe und Selbstvertrauen spüren.",
+      "Hier erscheinen aktuelle Kurse, Workshops, Ausschreibungen und Projekte für junge Menschen, Eltern, Schulen und Partner.",
     course1Title: "Englisch für Kinder und Jugendliche",
     course1For: "für Schüler, die freier sprechen und ohne Scham Lücken schließen wollen",
     course1Gives: "kleine Gruppen, Fokus auf Sprechen und ein ruhigerer Zugang zu Englisch",
@@ -889,6 +889,31 @@ function normalizeCmsTexts(lang, remoteTexts) {
 
   if (
     [
+      "Zobacz kursy",
+      "See courses"
+    ].includes(normalized.heroPrimary)
+  ) {
+    normalized.heroPrimary = defaults.heroPrimary;
+  }
+
+  if (
+    [
+      "Kursy",
+      "Courses",
+      "Kurse"
+    ].includes(normalized.coursesEyebrow)
+  ) {
+    [
+      "coursesEyebrow",
+      "coursesTitle",
+      "coursesLead"
+    ].forEach((key) => {
+      normalized[key] = defaults[key];
+    });
+  }
+
+  if (
+    [
       "Kursy językowe",
       "Language courses",
       "Sprachkurse"
@@ -1052,7 +1077,7 @@ const textEditorGroups = [
   ["Misja", ["missionEyebrow", "missionTitle", "missionLead", "missionCard1Title", "missionCard1Copy", "missionCard2Title", "missionCard2Copy", "missionCard3Title", "missionCard3Copy"]],
   ["Aktualności", ["newsEyebrow", "newsTitle", "newsLead"]],
   ["Projekty", ["projectsEyebrow", "projectsTitle", "project1Title", "project1Label", "project1Copy", "project2Title", "project2Label", "project2Copy", "project3Title", "project3Label", "project3Copy"]],
-  ["Kursy", ["coursesEyebrow", "coursesTitle", "coursesLead", "course1Title", "course1For", "course1Gives", "course1Start", "course2Title", "course2For", "course2Gives", "course2Start", "course3Title", "course3For", "course3Gives", "course3Start"]],
+  ["Inicjatywy", ["coursesEyebrow", "coursesTitle", "coursesLead", "course1Title", "course1For", "course1Gives", "course1Start", "course2Title", "course2For", "course2Gives", "course2Start", "course3Title", "course3For", "course3Gives", "course3Start"]],
   ["Zapisy", ["enrollmentEyebrow", "enrollmentTitle", "enrollmentLead", "start1Label", "start1Value", "start1Copy", "start2Label", "start2Value", "start2Copy", "start3Label", "start3Value", "start3Copy", "signupTitle", "signupNameLabel", "signupNamePlaceholder", "signupPhoneLabel", "signupPhonePlaceholder", "signupCourseLabel", "signupCourseOption1", "signupCourseOption2", "signupCourseOption3", "signupChildLabel", "signupChildPlaceholder", "signupMessageLabel", "signupMessagePlaceholder", "signupButton"]],
   ["Rodzice", ["parentsEyebrow", "parentsTitle", "parentsLead", "parent1Title", "parent1Copy", "parent2Title", "parent2Copy", "parent3Title", "parent3Copy"]],
   ["Edukacja", ["educationEyebrow", "educationImageText", "educationTitle", "educationItem1", "educationItem2", "educationItem3", "educationItem4"]],
@@ -1457,7 +1482,7 @@ function App() {
       : [])
   ];
   const quickPaths = [
-    [BookOpen, t("quickPath1Title"), t("quickPath1Copy"), "#kursy"],
+    [BookOpen, t("quickPath1Title"), t("quickPath1Copy"), "#inicjatywy"],
     [GraduationCap, t("quickPath2Title"), t("quickPath2Copy"), "#zapisy"],
     [Sparkles, t("quickPath3Title"), t("quickPath3Copy"), "#projekty"],
     [HeartHandshake, t("quickPath4Title"), t("quickPath4Copy"), "#pakiety-partnerskie"]
@@ -3221,7 +3246,7 @@ function App() {
       </section>
 
       {!sectionHidden.courses && (
-      <section id="kursy" className="bg-porcelain py-20 sm:py-28">
+      <section id="inicjatywy" className="bg-porcelain py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             {...fadeUp()}
