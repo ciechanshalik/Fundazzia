@@ -361,9 +361,9 @@ const defaultTexts = {
   package1Price: "ufundowanie wyjazdu na obóz językowy dla jednego dziecka",
   package1For: "dla firm i osób, które chcą pomóc konkretnie, bez nadęcia i pustych gestów",
   package1Item1: "realne wsparcie jednego dziecka",
-  package1Item2: "podziękowanie w komunikacji fundacji",
-  package1Item3: "krótka historia pokazująca sens wsparcia",
-  package1Item4: "informacja zwrotna po zakończeniu działania",
+  package1Item2: "logo partnera w sekcji Partnerzy na stronie",
+  package1Item3: "wzmianki w publikacjach jako partner inicjatyw",
+  package1Item4: "podziękowanie i krótka relacja po zakończeniu działania",
   package2Name: "Partner Rozwoju",
   package2Price: "ufundowanie dwóch wyjazdów na obóz językowy",
   package2For: "dla firm, które chcą wesprzeć konkretną ścieżkę edukacyjną",
@@ -562,9 +562,9 @@ const localizedTextOverrides = {
     package1Price: "funding a language camp trip for one child",
     package1For: "for companies and people who want to help concretely, without empty gestures",
     package1Item1: "real support for one child",
-    package1Item2: "a thank-you mention in foundation communication",
-    package1Item3: "a short story showing the meaning of the support",
-    package1Item4: "feedback after the activity is completed",
+    package1Item2: "partner logo in the Partners section on the website",
+    package1Item3: "mentions in publications as an initiative partner",
+    package1Item4: "a thank-you note and short story after the activity",
     package2Name: "Growth Partner",
     package2Price: "funding two language camp trips",
     package2For: "for companies supporting a concrete educational path",
@@ -758,9 +758,9 @@ const localizedTextOverrides = {
     package1Price: "Finanzierung einer Sprachcamp-Reise für ein Kind",
     package1For: "für Firmen und Menschen, die konkret helfen möchten, ohne leere Gesten",
     package1Item1: "reale Unterstützung für ein Kind",
-    package1Item2: "Dank in der Kommunikation der Stiftung",
-    package1Item3: "eine kurze Geschichte über den Sinn der Unterstützung",
-    package1Item4: "Rückmeldung nach Abschluss der Aktivität",
+    package1Item2: "Partnerlogo im Partnerbereich der Website",
+    package1Item3: "Erwähnungen in Publikationen als Partner der Initiative",
+    package1Item4: "Dank und kurze Geschichte nach Abschluss der Aktivität",
     package2Name: "Entwicklungspartner",
     package2Price: "Finanzierung von zwei Sprachcamp-Reisen",
     package2For: "für Firmen, die einen konkreten Bildungsweg unterstützen",
@@ -837,7 +837,10 @@ function normalizeCmsTexts(lang, remoteTexts) {
     [
       "Partner Główny",
       "Main Partner",
-      "Hauptpartner"
+      "Hauptpartner",
+      "Partner strategiczny",
+      "Strategic Partner",
+      "Strategischer Partner"
     ].includes(normalized.package1Name)
   ) {
     [
