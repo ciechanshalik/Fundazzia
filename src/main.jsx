@@ -926,6 +926,12 @@ const uiText = {
     defaultTexts: "Przywróć domyślne",
     autoSave: "Zapisuje się automatycznie",
     readMore: "Czytaj więcej",
+    newsArchive: "Historia aktualności",
+    newsArchiveLead: "Pełny zapis działań, warsztatów i momentów, które pokazują, jak fundacja pracuje na co dzień.",
+    newsArchiveCta: "Zobacz całą historię",
+    backToHome: "Wróć na stronę",
+    newsCount: "wpisów",
+    noNewsArchive: "Pierwsze aktualności pojawią się tutaj wkrótce.",
     close: "Zamknij",
     visible: "widoczna",
     hidden: "ukryta",
@@ -946,6 +952,12 @@ const uiText = {
     defaultTexts: "Restore defaults",
     autoSave: "Autosaves",
     readMore: "Read more",
+    newsArchive: "News history",
+    newsArchiveLead: "A full record of activities, workshops and moments showing how the foundation works day by day.",
+    newsArchiveCta: "See full history",
+    backToHome: "Back to website",
+    newsCount: "posts",
+    noNewsArchive: "The first updates will appear here soon.",
     close: "Close",
     visible: "visible",
     hidden: "hidden",
@@ -966,6 +978,12 @@ const uiText = {
     defaultTexts: "Standard wiederherstellen",
     autoSave: "Speichert automatisch",
     readMore: "Mehr lesen",
+    newsArchive: "News-Archiv",
+    newsArchiveLead: "Ein vollständiger Überblick über Aktivitäten, Workshops und Momente, die unsere tägliche Arbeit zeigen.",
+    newsArchiveCta: "Alle News ansehen",
+    backToHome: "Zurück zur Website",
+    newsCount: "Beiträge",
+    noNewsArchive: "Die ersten Neuigkeiten erscheinen hier bald.",
     close: "Schließen",
     visible: "sichtbar",
     hidden: "ausgeblendet",
@@ -1271,6 +1289,9 @@ function App() {
   const [isLegalPage, setIsLegalPage] = React.useState(
     new URLSearchParams(window.location.search).get("legal") === "privacy"
   );
+  const [isNewsArchivePage, setIsNewsArchivePage] = React.useState(
+    new URLSearchParams(window.location.search).get("news") === "archive"
+  );
   const [isLoggedIn, setIsLoggedIn] = React.useState(
     window.localStorage.getItem("zulawscy-admin") === "true"
   );
@@ -1286,7 +1307,8 @@ function App() {
   });
   const [scrollProgress, setScrollProgress] = React.useState(0);
   const heroOffset = Math.min(scrollProgress * 140, 80);
-  const latestNews = sortNews(news).slice(0, 3);
+  const archiveNews = sortNews(news);
+  const latestNews = archiveNews.slice(0, 3);
   const currentNews = latestNews[activeNews % Math.max(latestNews.length, 1)];
   const defaultTextSet = defaultTextsFor(lang);
   const t = (key) => texts[key] ?? defaultTextSet[key] ?? "";
@@ -1533,10 +1555,10 @@ function App() {
 
   React.useEffect(() => {
     const syncRouteState = () => {
+      const params = new URLSearchParams(window.location.search);
       setIsPanelOpen(window.location.hash === "#panel");
-      setIsLegalPage(
-        new URLSearchParams(window.location.search).get("legal") === "privacy"
-      );
+      setIsLegalPage(params.get("legal") === "privacy");
+      setIsNewsArchivePage(params.get("news") === "archive");
     };
 
     const handleClick = () => window.setTimeout(syncRouteState, 0);
@@ -1907,6 +1929,116 @@ function App() {
               </article>
             ))}
           </div>
+        </section>
+      </main>
+    );
+  }
+
+  if (isNewsArchivePage) {
+    return (
+      <main className="min-h-screen bg-porcelain text-ink">
+        <header className="border-b border-ink/10 bg-porcelain">
+          <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
+            <a href="/" className="flex items-center gap-3 text-sm font-black text-forest">
+              <span className="grid h-10 w-10 place-items-center overflow-hidden rounded-full bg-white shadow-sm">
+                <img
+                  src={logo}
+                  alt="Logo Fundacji Żuławscy Nobliści"
+                  className="h-9 w-9 object-contain"
+                />
+              </span>
+              {t("brand")}
+            </a>
+            <a
+              href="/"
+              className="rounded-full bg-ink px-4 py-2 text-xs font-black text-cream transition hover:bg-forest"
+            >
+              {u("backToHome")}
+            </a>
+          </div>
+        </header>
+
+        <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
+          <div className="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
+            <div>
+              <p className="eyebrow">{t("newsEyebrow")}</p>
+              <h1 className="mt-4 max-w-4xl font-serif text-[clamp(3rem,8vw,6.5rem)] font-extrabold leading-[0.9] text-forest">
+                {u("newsArchive")}
+              </h1>
+            </div>
+            <div className="lg:pb-2">
+              <p className="lead">
+                {u("newsArchiveLead")}
+              </p>
+              <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-forest/12 bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-forest shadow-sm">
+                <CalendarDays size={16} className="text-gold" />
+                {archiveNews.length} {u("newsCount")}
+              </div>
+            </div>
+          </div>
+
+          {archiveNews.length > 0 ? (
+            <div className="mt-12 grid gap-4 md:grid-cols-2">
+              {archiveNews.map((post, index) => (
+                <article
+                  key={post.id}
+                  className="grid overflow-hidden rounded-[8px] border border-forest/10 bg-white/78 shadow-panel sm:grid-cols-[180px_1fr]"
+                >
+                  <div className="min-h-[180px] bg-forest/10">
+                    {post.image ? (
+                      <img
+                        src={post.image}
+                        alt=""
+                        loading={index < 2 ? "eager" : "lazy"}
+                        decoding="async"
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div className="grid h-full min-h-[180px] place-items-center bg-forest text-cream">
+                        <BookOpen size={32} className="text-gold" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex min-h-[220px] flex-col p-5">
+                    <div className="flex flex-wrap items-center gap-3">
+                      {post.tag && (
+                        <span className="rounded-full bg-gold px-3 py-1 text-[0.66rem] font-black uppercase tracking-[0.16em] text-ink">
+                          {post.tag}
+                        </span>
+                      )}
+                      {post.date && (
+                        <span className="inline-flex items-center gap-2 text-xs font-black text-ink/48">
+                          <CalendarDays size={14} className="text-forest" />
+                          {post.date}
+                        </span>
+                      )}
+                    </div>
+                    <h2 className="mt-5 font-serif text-3xl font-bold leading-none text-forest">
+                      {post.title}
+                    </h2>
+                    <p className="mt-4 text-sm font-semibold leading-7 text-ink/62">
+                      {post.excerpt}
+                    </p>
+                    {post.link && (
+                      <a
+                        href={post.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-auto inline-flex w-fit items-center gap-2 pt-5 text-sm font-black text-forest transition hover:text-gold"
+                      >
+                        {u("readMore")}
+                        <ArrowUpRight size={16} />
+                      </a>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-12 rounded-[8px] border border-forest/10 bg-white/78 p-8 shadow-panel">
+              <p className="text-lg font-bold text-forest">{u("noNewsArchive")}</p>
+            </div>
+          )}
         </section>
       </main>
     );
@@ -2675,6 +2807,13 @@ function App() {
             <p className="lead mt-6">
               {t("newsLead")}
             </p>
+            <a
+              href="/?news=archive"
+              className="mt-8 inline-flex items-center gap-2 rounded-full border border-forest/14 bg-white px-5 py-3 text-sm font-black text-forest shadow-sm transition hover:-translate-y-1 hover:border-gold hover:bg-gold hover:text-ink"
+            >
+              {u("newsArchiveCta")}
+              <ArrowUpRight size={18} />
+            </a>
           </motion.div>
 
           <motion.div {...fadeUp(0.08)} className="grid gap-4">
