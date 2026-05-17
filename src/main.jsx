@@ -3677,13 +3677,24 @@ function App() {
             </a>
           </div>
           <div className="lg:text-right">
-            <a
-              href={`mailto:${t("contactEmail")}`}
-              className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-3 text-sm font-black text-ink transition hover:bg-cream"
-            >
-              <Send size={16} />
-              {u("writeToUs")}
-            </a>
+            <div className="flex flex-wrap gap-3 lg:justify-end">
+              <a
+                href={`mailto:${t("contactEmail")}`}
+                className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-3 text-sm font-black text-ink transition hover:bg-cream"
+              >
+                <Send size={16} />
+                {u("writeToUs")}
+              </a>
+              <a
+                href="https://www.facebook.com/profile.php?id=61589819647247"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Facebook Fundacji Żuławscy Nobliści"
+                className="grid h-12 w-12 place-items-center rounded-full border border-cream/15 bg-cream/[0.06] text-lg font-black text-cream transition hover:-translate-y-1 hover:border-gold hover:bg-gold hover:text-ink"
+              >
+                f
+              </a>
+            </div>
             <p className="mt-5 text-sm leading-6 text-cream/50">
               {t("contactEmail")}
               <br />
