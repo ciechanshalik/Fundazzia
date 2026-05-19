@@ -3741,15 +3741,6 @@ function App() {
               >
                 <InstagramIcon size={19} />
               </a>
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Napisz na WhatsApp"
-                className="grid h-12 w-12 place-items-center rounded-full border border-cream/15 bg-cream/[0.06] text-cream transition hover:-translate-y-1 hover:border-[#25D366] hover:bg-[#25D366] hover:text-ink"
-              >
-                <MessageCircle size={19} />
-              </a>
             </div>
             <p className="mt-5 text-sm leading-6 text-cream/50">
               Żuławy Wiślane / działania w Polsce i Europie
