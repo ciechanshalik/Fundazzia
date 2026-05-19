@@ -3715,10 +3715,12 @@ function App() {
           <div className="lg:text-right">
             <div className="flex flex-wrap gap-3 lg:justify-end">
               <a
-                href={`mailto:${t("contactEmail")}`}
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-3 text-sm font-black text-ink transition hover:bg-cream"
               >
-                <Send size={16} />
+                <MessageCircle size={16} />
                 {u("writeToUs")}
               </a>
               <a
