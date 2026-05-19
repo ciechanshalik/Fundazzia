@@ -3611,7 +3611,7 @@ function App() {
                 rel="noreferrer"
               >
                 <MessageCircle className="text-gold" />
-                WhatsApp: +48 502 617 479
+                Napisz na WhatsApp
               </a>
               <p className="flex items-center gap-3 text-lg">
                 <MapPin className="text-gold" />
