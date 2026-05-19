@@ -3752,11 +3752,7 @@ function App() {
               </a>
             </div>
             <p className="mt-5 text-sm leading-6 text-cream/50">
-              {t("contactEmail")}
-              <br />
-              WhatsApp: +48 502 617 479
-              <br />
-              {t("contactPlace")}
+              Żuławy Wiślane / działania w Polsce i Europie
             </p>
           </div>
         </div>
