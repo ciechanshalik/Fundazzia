@@ -946,8 +946,7 @@ const uiText = {
     hidden: "ukryta",
     sectionVisibility: "Widoczność sekcji",
     contactShort: "Kontakt",
-    whatsappShort: "WhatsApp",
-    enrollShort: "Zapisz",
+    enrollShort: "Zapisz na kurs",
     partnerShort: "Partnerstwa",
     privacyPolicy: "Polityka prywatności",
     termsAndPrivacy: "Regulamin i prywatność"
@@ -990,8 +989,7 @@ const uiText = {
     hidden: "hidden",
     sectionVisibility: "Section visibility",
     contactShort: "Contact",
-    whatsappShort: "WhatsApp",
-    enrollShort: "Enroll",
+    enrollShort: "Join a course",
     partnerShort: "Partners",
     privacyPolicy: "Privacy policy",
     termsAndPrivacy: "Terms and privacy"
@@ -1034,8 +1032,7 @@ const uiText = {
     hidden: "ausgeblendet",
     sectionVisibility: "Sichtbarkeit",
     contactShort: "Kontakt",
-    whatsappShort: "WhatsApp",
-    enrollShort: "Anmelden",
+    enrollShort: "Kurs anmelden",
     partnerShort: "Partner",
     privacyPolicy: "Datenschutz",
     termsAndPrivacy: "Regeln und Datenschutz"
@@ -1417,11 +1414,11 @@ function App() {
     [Mail, t("parent2Title"), t("parent2Copy")],
     [HeartHandshake, t("parent3Title"), t("parent3Copy")]
   ];
+  const showMobilePartner = !sectionHidden.packages;
   const mobileDockItems = [
     [Mail, u("contactShort"), "#kontakt", "bg-cream text-forest"],
-    [MessageCircle, u("whatsappShort"), whatsappUrl, "bg-[#25D366] text-ink", true],
-    [GraduationCap, u("enrollShort"), "#zapisy", "bg-gold text-ink"],
-    ...(!sectionHidden.packages
+    [GraduationCap, u("enrollShort"), "#zapisy", "col-span-2 bg-gold text-ink"],
+    ...(showMobilePartner
       ? [[HeartHandshake, u("partnerShort"), "#pakiety-partnerskie", "bg-forest text-cream"]]
       : [])
   ];
@@ -3761,13 +3758,15 @@ function App() {
 
       {!isPanelOpen && !open && (
         <div className="fixed inset-x-3 bottom-3 z-40 md:hidden">
-          <div className="grid grid-cols-4 gap-2 rounded-[8px] border border-cream/20 bg-ink/88 p-2 shadow-panel backdrop-blur-2xl">
-            {mobileDockItems.map(([Icon, label, href, className, external]) => (
+          <div
+            className={`grid ${
+              showMobilePartner ? "grid-cols-4" : "grid-cols-3"
+            } gap-2 rounded-[8px] border border-cream/20 bg-ink/88 p-2 shadow-panel backdrop-blur-2xl`}
+          >
+            {mobileDockItems.map(([Icon, label, href, className]) => (
               <a
                 key={label}
                 href={href}
-                target={external ? "_blank" : undefined}
-                rel={external ? "noreferrer" : undefined}
                 className={`flex min-h-12 items-center justify-center gap-2 rounded-[8px] px-2 text-xs font-black transition active:scale-[0.98] ${className}`}
               >
                 <Icon size={16} />
