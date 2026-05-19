@@ -14,6 +14,7 @@ import {
   Mail,
   MapPin,
   Menu,
+  MessageCircle,
   Plus,
   RotateCcw,
   Send,
@@ -185,6 +186,8 @@ const partners = [
 ];
 
 const adminPassword = "noblisci2026";
+const whatsappUrl =
+  "https://wa.me/48502617479?text=Cze%C5%9B%C4%87%2C%20pisz%C4%99%20ze%20strony%20Fundacji%20%C5%BBu%C5%82awscy%20Nobli%C5%9Bci.";
 
 const defaultTexts = {
   contentVersion: "brandbook-v7-parent-english",
@@ -923,6 +926,7 @@ const uiText = {
     hidden: "ukryta",
     sectionVisibility: "Widoczność sekcji",
     contactShort: "Kontakt",
+    whatsappShort: "WhatsApp",
     enrollShort: "Zapisz",
     partnerShort: "Partnerstwa",
     privacyPolicy: "Polityka prywatności",
@@ -966,6 +970,7 @@ const uiText = {
     hidden: "hidden",
     sectionVisibility: "Section visibility",
     contactShort: "Contact",
+    whatsappShort: "WhatsApp",
     enrollShort: "Enroll",
     partnerShort: "Partners",
     privacyPolicy: "Privacy policy",
@@ -1009,6 +1014,7 @@ const uiText = {
     hidden: "ausgeblendet",
     sectionVisibility: "Sichtbarkeit",
     contactShort: "Kontakt",
+    whatsappShort: "WhatsApp",
     enrollShort: "Anmelden",
     partnerShort: "Partner",
     privacyPolicy: "Datenschutz",
@@ -1393,6 +1399,7 @@ function App() {
   ];
   const mobileDockItems = [
     [Mail, u("contactShort"), "#kontakt", "bg-cream text-forest"],
+    [MessageCircle, u("whatsappShort"), whatsappUrl, "bg-[#25D366] text-ink", true],
     [GraduationCap, u("enrollShort"), "#zapisy", "bg-gold text-ink"],
     ...(!sectionHidden.packages
       ? [[HeartHandshake, u("partnerShort"), "#pakiety-partnerskie", "bg-forest text-cream"]]
@@ -3577,6 +3584,15 @@ function App() {
                 <Mail className="text-gold" />
                 {t("contactEmail")}
               </a>
+              <a
+                className="flex items-center gap-3 text-lg transition hover:text-gold"
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <MessageCircle className="text-gold" />
+                WhatsApp: +48 502 617 479
+              </a>
               <p className="flex items-center gap-3 text-lg">
                 <MapPin className="text-gold" />
                 {t("contactPlace")}
@@ -3694,9 +3710,20 @@ function App() {
               >
                 f
               </a>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Napisz na WhatsApp"
+                className="grid h-12 w-12 place-items-center rounded-full border border-cream/15 bg-cream/[0.06] text-cream transition hover:-translate-y-1 hover:border-[#25D366] hover:bg-[#25D366] hover:text-ink"
+              >
+                <MessageCircle size={19} />
+              </a>
             </div>
             <p className="mt-5 text-sm leading-6 text-cream/50">
               {t("contactEmail")}
+              <br />
+              WhatsApp: +48 502 617 479
               <br />
               {t("contactPlace")}
             </p>
@@ -3716,11 +3743,13 @@ function App() {
 
       {!isPanelOpen && !open && (
         <div className="fixed inset-x-3 bottom-3 z-40 md:hidden">
-          <div className="grid grid-cols-3 gap-2 rounded-[8px] border border-cream/20 bg-ink/88 p-2 shadow-panel backdrop-blur-2xl">
-            {mobileDockItems.map(([Icon, label, href, className]) => (
+          <div className="grid grid-cols-4 gap-2 rounded-[8px] border border-cream/20 bg-ink/88 p-2 shadow-panel backdrop-blur-2xl">
+            {mobileDockItems.map(([Icon, label, href, className, external]) => (
               <a
                 key={label}
                 href={href}
+                target={external ? "_blank" : undefined}
+                rel={external ? "noreferrer" : undefined}
                 className={`flex min-h-12 items-center justify-center gap-2 rounded-[8px] px-2 text-xs font-black transition active:scale-[0.98] ${className}`}
               >
                 <Icon size={16} />
