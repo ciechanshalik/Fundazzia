@@ -926,15 +926,16 @@ const uiText = {
     noNewsArchive: "Pierwsze aktualności pojawią się tutaj wkrótce.",
     courseFormEyebrow: "Zapisy z Instagrama",
     courseFormTitle: "Zapisz dziecko na kurs.",
-    courseFormLead: "Zostaw kontakt, wybierz kurs i napisz wiek dziecka. Odezwę się z informacją o grupach, terminach i najbliższych miejscach.",
+    courseFormLead: "Zostaw kontakt, wybierz kurs i napisz wiek kursanta. Odezwę się z informacją o grupach, terminach i najbliższych miejscach.",
     courseFormParentName: "Imię i nazwisko rodzica",
     courseFormEmail: "Email",
     courseFormPhone: "Nr telefonu",
-    courseFormChildAge: "Wiek dziecka",
+    courseFormChildAge: "Wiek kursanta",
     courseFormCourse: "Wybierz kurs",
     courseFormOption1: "kurs ósmoklasisty z angielskiego",
     courseFormOption2: "kurs angielskiego dla dzieci",
     courseFormOption3: "kurs szwedzkiego od podstaw",
+    courseFormOption4: "kurs angielskiego dla dorosłych",
     courseFormMessage: "Uwagi / preferowane godziny",
     courseFormMessagePlaceholder: "Np. dziecko jest w 7 klasie, najlepiej popołudnia.",
     courseFormConsent: "Zgadzam się na kontakt w sprawie zapisu na kurs.",
@@ -969,15 +970,16 @@ const uiText = {
     noNewsArchive: "The first updates will appear here soon.",
     courseFormEyebrow: "Instagram sign-up",
     courseFormTitle: "Sign a child up for a course.",
-    courseFormLead: "Leave your contact details, choose a course and add the child's age. We will get back to you with groups, dates and available places.",
+    courseFormLead: "Leave your contact details, choose a course and add the participant's age. We will get back to you with groups, dates and available places.",
     courseFormParentName: "Parent or guardian name",
     courseFormEmail: "Email",
     courseFormPhone: "Phone number",
-    courseFormChildAge: "Child's age",
+    courseFormChildAge: "Participant's age",
     courseFormCourse: "Choose a course",
     courseFormOption1: "English 8th-grade exam course",
     courseFormOption2: "English course for children",
     courseFormOption3: "Swedish for beginners",
+    courseFormOption4: "English course for adults",
     courseFormMessage: "Notes / preferred times",
     courseFormMessagePlaceholder: "E.g. grade 7, afternoons work best.",
     courseFormConsent: "I agree to be contacted about the course sign-up.",
@@ -1012,15 +1014,16 @@ const uiText = {
     noNewsArchive: "Die ersten Neuigkeiten erscheinen hier bald.",
     courseFormEyebrow: "Anmeldung über Instagram",
     courseFormTitle: "Melde ein Kind für einen Kurs an.",
-    courseFormLead: "Hinterlasse Kontakt, wähle einen Kurs und gib das Alter des Kindes an. Wir melden uns mit Gruppen, Terminen und freien Plätzen.",
+    courseFormLead: "Hinterlasse Kontakt, wähle einen Kurs und gib das Alter der teilnehmenden Person an. Wir melden uns mit Gruppen, Terminen und freien Plätzen.",
     courseFormParentName: "Name des Elternteils",
     courseFormEmail: "E-Mail",
     courseFormPhone: "Telefonnummer",
-    courseFormChildAge: "Alter des Kindes",
+    courseFormChildAge: "Alter der teilnehmenden Person",
     courseFormCourse: "Kurs wählen",
     courseFormOption1: "Englischkurs für die Prüfung der 8. Klasse",
     courseFormOption2: "Englischkurs für Kinder",
     courseFormOption3: "Schwedisch für Anfänger",
+    courseFormOption4: "Englischkurs für Erwachsene",
     courseFormMessage: "Hinweise / bevorzugte Zeiten",
     courseFormMessagePlaceholder: "Z.B. 7. Klasse, am besten nachmittags.",
     courseFormConsent: "Ich stimme der Kontaktaufnahme zur Kursanmeldung zu.",
@@ -2180,7 +2183,8 @@ function App() {
                 {[
                   u("courseFormOption1"),
                   u("courseFormOption2"),
-                  u("courseFormOption3")
+                  u("courseFormOption3"),
+                  u("courseFormOption4")
                 ].map((item) => (
                   <span
                     key={item}
@@ -2249,6 +2253,7 @@ function App() {
                     <option>{u("courseFormOption1")}</option>
                     <option>{u("courseFormOption2")}</option>
                     <option>{u("courseFormOption3")}</option>
+                    <option>{u("courseFormOption4")}</option>
                   </select>
                 </label>
                 <label className="block text-sm font-bold text-ink/70 sm:col-span-2">
