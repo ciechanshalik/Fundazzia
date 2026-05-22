@@ -331,6 +331,7 @@ const defaultTexts = {
   signupCourseOption1: "angielski / kurs językowy",
   signupCourseOption2: "kurs ósmoklasisty",
   signupCourseOption3: "warsztaty",
+  signupCourseOption4: "kursy językowe dla dorosłych",
   signupChildLabel: "Klasa / wiek dziecka",
   signupChildPlaceholder: "Np. 7 klasa, 13 lat",
   signupMessageLabel: "Krótka wiadomość",
@@ -380,6 +381,7 @@ const defaultTexts = {
   contactPurposeOption2: "Chcę zostać partnerem",
   contactPurposeOption3: "Interesuje mnie wolontariat",
   contactPurposeOption4: "Mam inne pytanie",
+  contactPurposeOption5: "Interesują mnie kursy językowe dla dorosłych",
   contactMessageLabel: "Wiadomość",
   contactMessagePlaceholder: "Napisz krótko, z czym przychodzisz.",
   contactButton: "Wyślij wiadomość",
@@ -521,6 +523,7 @@ const localizedTextOverrides = {
     signupCourseOption1: "English / language course",
     signupCourseOption2: "8th-grade exam course",
     signupCourseOption3: "workshops",
+    signupCourseOption4: "language courses for adults",
     signupChildLabel: "Child's grade / age",
     signupChildPlaceholder: "E.g. grade 7, age 13",
     signupMessageLabel: "Short message",
@@ -568,6 +571,7 @@ const localizedTextOverrides = {
     contactPurposeOption2: "I want to become a partner",
     contactPurposeOption3: "I am interested in volunteering",
     contactPurposeOption4: "I have another question",
+    contactPurposeOption5: "I am interested in language courses for adults",
     contactMessageLabel: "Message",
     contactMessagePlaceholder: "Tell us briefly what brings you here.",
     contactButton: "Send message",
@@ -706,6 +710,7 @@ const localizedTextOverrides = {
     signupCourseOption1: "Englisch / Sprachkurs",
     signupCourseOption2: "Kurs für die 8.-Klasse-Prüfung",
     signupCourseOption3: "Workshops",
+    signupCourseOption4: "Sprachkurse für Erwachsene",
     signupChildLabel: "Klasse / Alter des Kindes",
     signupChildPlaceholder: "Z.B. 7. Klasse, 13 Jahre",
     signupMessageLabel: "Kurze Nachricht",
@@ -753,6 +758,7 @@ const localizedTextOverrides = {
     contactPurposeOption2: "Ich möchte Partner werden",
     contactPurposeOption3: "Ich interessiere mich für Freiwilligenarbeit",
     contactPurposeOption4: "Ich habe eine andere Frage",
+    contactPurposeOption5: "Ich interessiere mich für Sprachkurse für Erwachsene",
     contactMessageLabel: "Nachricht",
     contactMessagePlaceholder: "Schreib kurz, womit du kommst.",
     contactButton: "Nachricht senden",
@@ -1047,7 +1053,7 @@ const textEditorGroups = [
   ["Misja", ["missionEyebrow", "missionTitle", "missionLead", "missionCard1Title", "missionCard1Copy", "missionCard2Title", "missionCard2Copy", "missionCard3Title", "missionCard3Copy"]],
   ["Aktualności", ["newsEyebrow", "newsTitle", "newsLead"]],
   ["Inicjatywy", ["coursesEyebrow", "coursesTitle", "coursesLead", "course1Title", "course1For", "course1Gives", "course1Start", "course2Title", "course2For", "course2Gives", "course2Start", "course3Title", "course3For", "course3Gives", "course3Start"]],
-  ["Zapisy", ["enrollmentEyebrow", "enrollmentTitle", "enrollmentLead", "start1Label", "start1Value", "start1Copy", "start2Label", "start2Value", "start2Copy", "start3Label", "start3Value", "start3Copy", "signupTitle", "signupNameLabel", "signupNamePlaceholder", "signupPhoneLabel", "signupPhonePlaceholder", "signupCourseLabel", "signupCourseOption1", "signupCourseOption2", "signupCourseOption3", "signupChildLabel", "signupChildPlaceholder", "signupMessageLabel", "signupMessagePlaceholder", "signupButton"]],
+  ["Zapisy", ["enrollmentEyebrow", "enrollmentTitle", "enrollmentLead", "start1Label", "start1Value", "start1Copy", "start2Label", "start2Value", "start2Copy", "start3Label", "start3Value", "start3Copy", "signupTitle", "signupNameLabel", "signupNamePlaceholder", "signupPhoneLabel", "signupPhonePlaceholder", "signupCourseLabel", "signupCourseOption1", "signupCourseOption2", "signupCourseOption3", "signupCourseOption4", "signupChildLabel", "signupChildPlaceholder", "signupMessageLabel", "signupMessagePlaceholder", "signupButton"]],
   ["Rodzice", ["parentsEyebrow", "parentsTitle", "parentsLead", "parent1Title", "parent1Copy", "parent2Title", "parent2Copy", "parent3Title", "parent3Copy"]],
   ["Edukacja", ["educationEyebrow", "educationImageText", "educationTitle", "educationItem1", "educationItem2", "educationItem3", "educationItem4"]],
   ["Wolontariusze", ["volunteersEyebrow", "volunteersTitle", "volunteer1", "volunteer2", "volunteer3", "volunteer4"]],
@@ -1055,7 +1061,7 @@ const textEditorGroups = [
   ["Partnerzy", ["partnersEyebrow", "partnersTitle", "partner1", "partner2", "partner3", "partner4", "partner5", "partner6"]],
   ["Pakiety partnerskie", ["packagesEyebrow", "packagesTitle", "packagesLead", "package1Name", "package1Price", "package1For", "package1Item1", "package1Item2", "package1Item3", "package1Item4"]],
   ["FAQ", ["faqEyebrow", "faqTitle", "faq1Question", "faq1Answer", "faq2Question", "faq2Answer", "faq3Question", "faq3Answer", "faq4Question", "faq4Answer"]],
-  ["Kontakt", ["contactEyebrow", "contactTitle", "contactEmail", "contactPlace", "contactNameLabel", "contactNamePlaceholder", "contactEmailLabel", "contactEmailPlaceholder", "contactPurposeLabel", "contactPurposeOption1", "contactPurposeOption2", "contactPurposeOption3", "contactPurposeOption4", "contactMessageLabel", "contactMessagePlaceholder", "contactButton"]]
+  ["Kontakt", ["contactEyebrow", "contactTitle", "contactEmail", "contactPlace", "contactNameLabel", "contactNamePlaceholder", "contactEmailLabel", "contactEmailPlaceholder", "contactPurposeLabel", "contactPurposeOption1", "contactPurposeOption2", "contactPurposeOption3", "contactPurposeOption4", "contactPurposeOption5", "contactMessageLabel", "contactMessagePlaceholder", "contactButton"]]
 ];
 
 function loadTexts(lang) {
@@ -3278,6 +3284,7 @@ function App() {
                     <option>{t("signupCourseOption1")}</option>
                     <option>{t("signupCourseOption2")}</option>
                     <option>{t("signupCourseOption3")}</option>
+                    <option>{t("signupCourseOption4")}</option>
                   </select>
                 </label>
                 <label className="block text-sm font-bold text-ink/70">
@@ -3648,6 +3655,7 @@ function App() {
                 <option>{t("contactPurposeOption2")}</option>
                 <option>{t("contactPurposeOption3")}</option>
                 <option>{t("contactPurposeOption4")}</option>
+                <option>{t("contactPurposeOption5")}</option>
               </select>
             </label>
             <label className="field">
