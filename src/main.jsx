@@ -2963,36 +2963,45 @@ function App() {
 
       <section
         id="top"
-        className="relative flex min-h-[92svh] items-end bg-ink text-cream"
+        className="hero-stage relative flex min-h-[100svh] items-end overflow-hidden bg-ink text-cream"
       >
         <motion.div
           style={{ transform: `translateY(${heroOffset}px)` }}
-          className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=crop&w=1600&q=82')] bg-cover bg-center opacity-55"
+          className="hero-photo absolute inset-0 bg-[url('https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=crop&w=1800&q=84')] bg-cover bg-center opacity-65"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,18,15,.18),rgba(7,18,15,.55)_40%,rgba(7,18,15,.98))]" />
-        <div className="absolute inset-0 bg-grain mix-blend-screen opacity-70" />
-        <div className="relative mx-auto w-full max-w-7xl px-4 pb-12 pt-32 sm:px-6 md:pb-16 lg:px-8">
+        <div className="absolute inset-0 bg-[linear-gradient(105deg,rgba(7,18,15,.96)_0%,rgba(7,18,15,.82)_36%,rgba(11,59,46,.42)_58%,rgba(7,18,15,.2)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,18,15,.12),rgba(7,18,15,.5)_48%,rgba(7,18,15,.98))]" />
+        <div className="hero-light absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent" />
+        <div className="hero-sweep absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-transparent via-cream/[0.08] to-transparent" />
+        <div className="absolute inset-0 bg-grain mix-blend-screen opacity-80" />
+        <div className="pointer-events-none absolute inset-4 border border-cream/10 sm:inset-6" />
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-ink to-transparent" />
+
+        <div className="relative mx-auto grid w-full max-w-7xl gap-10 px-4 pb-12 pt-32 sm:px-6 md:pb-16 lg:grid-cols-[1fr_360px] lg:items-end lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-5xl"
+            className="hero-copy max-w-5xl"
           >
-            <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-cream/20 bg-cream/10 px-4 py-2 text-sm font-semibold backdrop-blur-xl">
+            <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-cream/20 bg-cream/10 px-4 py-2 text-sm font-semibold shadow-glow backdrop-blur-xl">
               <Sparkles size={16} className="text-gold" />
               {t("heroEyebrow")}
             </div>
-            <h1 className="max-w-5xl font-serif text-[clamp(2.65rem,9vw,7.7rem)] font-extrabold leading-[.86] tracking-normal">
+            <h1 className="hero-title max-w-5xl font-serif text-6xl font-extrabold leading-[0.84] tracking-normal sm:text-7xl lg:text-8xl xl:text-[7.5rem]">
               {t("heroTitle")}
             </h1>
-            <div className="mt-8 grid max-w-4xl gap-6 md:grid-cols-[1.2fr_.8fr] md:items-end">
-              <p className="text-balance text-xl leading-8 text-cream/82 sm:text-2xl">
+            <div className="mt-8 h-px max-w-3xl overflow-hidden bg-cream/12">
+              <div className="hero-line h-full w-1/3 bg-gradient-to-r from-gold via-cream to-transparent" />
+            </div>
+            <div className="mt-8 grid max-w-4xl gap-6 md:grid-cols-[1.12fr_.88fr] md:items-end">
+              <p className="text-balance text-xl font-semibold leading-8 text-cream/82 sm:text-2xl">
                 {t("heroLead")}
               </p>
               <div className="flex flex-wrap gap-3 md:justify-end">
                 <a
                   href="#inicjatywy"
-                  className="inline-flex items-center gap-2 rounded-full bg-cream px-6 py-4 text-sm font-black text-forest transition hover:-translate-y-1"
+                  className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-4 text-sm font-black text-ink shadow-glow transition hover:-translate-y-1 hover:bg-cream"
                 >
                   {t("heroPrimary")}
                   <ArrowUpRight size={18} />
@@ -3006,6 +3015,37 @@ function App() {
               </div>
             </div>
           </motion.div>
+
+          <aside className="hero-proof hidden rounded-[8px] border border-cream/12 bg-cream/[0.07] p-5 shadow-panel backdrop-blur-2xl lg:block">
+            <p className="text-xs font-black uppercase tracking-[0.22em] text-gold">
+              Żuławy / Europa
+            </p>
+            <div className="mt-7 grid gap-4">
+              {[
+                ["01", t("quickPath1Title")],
+                ["02", t("quickPath2Title")],
+                ["03", t("quickPath3Title")]
+              ].map(([number, label]) => (
+                <a
+                  key={number}
+                  href="#inicjatywy"
+                  className="group grid grid-cols-[44px_1fr_auto] items-center gap-3 border-t border-cream/12 pt-4"
+                >
+                  <span className="font-serif text-2xl text-cream/42">{number}</span>
+                  <span className="text-sm font-black leading-tight text-cream">
+                    {label}
+                  </span>
+                  <ArrowUpRight
+                    size={16}
+                    className="text-cream/35 transition group-hover:text-gold"
+                  />
+                </a>
+              ))}
+            </div>
+            <p className="mt-8 text-sm font-semibold leading-6 text-cream/60">
+              Małe miejscowości. Wielkie ambicje. Konkretne ścieżki działania.
+            </p>
+          </aside>
         </div>
       </section>
 
