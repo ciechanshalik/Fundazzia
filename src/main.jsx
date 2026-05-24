@@ -3049,13 +3049,14 @@ function App() {
         </div>
       </section>
 
-      <section className="bg-forest py-5">
+      <section className="relative overflow-hidden bg-forest py-5">
+        <div className="section-aurora absolute inset-0 opacity-30" />
         <div className="mx-auto grid max-w-7xl gap-px overflow-hidden rounded-[8px] border border-cream/10 bg-cream/10 px-4 sm:px-6 md:grid-cols-4 lg:px-8">
           {quickPaths.map(([Icon, title, copy, href]) => (
             <a
               key={title}
               href={href}
-              className="group bg-cream/[0.06] p-5 text-cream transition hover:bg-cream hover:text-ink"
+              className="premium-card group relative overflow-hidden bg-cream/[0.06] p-5 text-cream transition hover:bg-cream hover:text-ink"
             >
               <div className="flex items-start justify-between gap-4">
                 <Icon className="text-gold transition group-hover:text-forest" size={22} />
@@ -3070,7 +3071,9 @@ function App() {
         </div>
       </section>
 
-      <section id="misja" className="relative bg-porcelain py-20 sm:py-28">
+      <section id="misja" className="relative overflow-hidden bg-porcelain py-20 sm:py-28">
+        <div className="absolute -right-32 top-12 h-80 w-80 rounded-full bg-forest/10 blur-3xl" />
+        <div className="absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-gold/10 blur-3xl" />
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[.85fr_1.15fr] lg:px-8">
           <motion.div {...fadeUp()}>
             <p className="eyebrow">{t("missionEyebrow")}</p>
@@ -3090,7 +3093,7 @@ function App() {
               ].map(([Icon, title, copy]) => (
                 <div
                   key={title}
-                  className="rounded-[8px] border border-forest/10 bg-white/70 p-5 shadow-panel"
+                  className="premium-card rounded-[8px] border border-forest/10 bg-white/76 p-5 shadow-panel"
                 >
                   <Icon className="mb-7 text-forest" size={24} />
                   <h3 className="font-bold">{title}</h3>
@@ -3102,8 +3105,10 @@ function App() {
         </div>
       </section>
 
-      <section id="aktualnosci" className="bg-cream py-20 sm:py-28">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[.82fr_1.18fr] lg:px-8">
+      <section id="aktualnosci" className="relative overflow-hidden bg-cream py-20 sm:py-28">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-forest/40 to-transparent" />
+        <div className="section-aurora absolute inset-0 opacity-35" />
+        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[.82fr_1.18fr] lg:px-8">
           <motion.div {...fadeUp()} className="self-center">
             <p className="eyebrow">{t("newsEyebrow")}</p>
             <h2 className="section-title">
@@ -3128,7 +3133,7 @@ function App() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                className="relative min-h-[520px] overflow-hidden rounded-[8px] bg-forest p-6 text-cream shadow-panel sm:p-8"
+                className="news-feature relative min-h-[520px] overflow-hidden rounded-[8px] bg-forest p-6 text-cream shadow-panel sm:p-8"
               >
                 {currentNews.image && (
                   <img
@@ -3138,6 +3143,7 @@ function App() {
                     className="absolute inset-0 h-full w-full object-cover opacity-42"
                   />
                 )}
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-t from-forest via-forest/72 to-ink/20" />
                 <div className="absolute inset-0 bg-grain opacity-70" />
                 <div className="relative flex min-h-[460px] flex-col justify-end">
@@ -3167,7 +3173,7 @@ function App() {
                 </div>
               </motion.article>
             ) : (
-              <div className="rounded-[8px] border border-ink/10 bg-white/70 p-8">
+              <div className="premium-card rounded-[8px] border border-ink/10 bg-white/70 p-8">
                 <p className="text-xl font-bold">Brak aktualności do wyświetlenia.</p>
               </div>
             )}
@@ -3178,7 +3184,7 @@ function App() {
                   key={post.id}
                   type="button"
                   onClick={() => setActiveNews(index)}
-                  className={`grid grid-cols-[72px_1fr] items-center gap-4 rounded-[8px] border p-3 text-left transition ${
+                  className={`premium-card grid grid-cols-[72px_1fr] items-center gap-4 rounded-[8px] border p-3 text-left transition ${
                     index === activeNews % Math.max(latestNews.length, 1)
                       ? "border-forest bg-porcelain shadow-panel"
                       : "border-ink/10 bg-white/70 hover:-translate-y-1"
@@ -3211,8 +3217,10 @@ function App() {
       </section>
 
       {!sectionHidden.courses && (
-      <section id="inicjatywy" className="bg-forest py-20 text-cream sm:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section id="inicjatywy" className="relative overflow-hidden bg-forest py-20 text-cream sm:py-28">
+        <div className="section-aurora absolute inset-0 opacity-40" />
+        <div className="absolute inset-0 bg-grain opacity-50" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             {...fadeUp()}
             className="grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-end"
@@ -3230,8 +3238,9 @@ function App() {
               <motion.article
                 key={title}
                 {...fadeUp(index * 0.07)}
-                className="group flex min-h-[440px] flex-col rounded-[8px] border border-cream/10 bg-cream/[0.08] p-6 shadow-panel transition hover:-translate-y-1 hover:bg-cream hover:text-ink"
+                className="initiative-card group relative flex min-h-[440px] flex-col overflow-hidden rounded-[8px] border border-cream/10 bg-cream/[0.08] p-6 shadow-panel transition hover:-translate-y-1 hover:bg-cream hover:text-ink"
               >
+                <div className="absolute right-4 top-4 h-20 w-20 rounded-full border border-gold/20 opacity-70 transition group-hover:scale-125 group-hover:border-forest/20" />
                 <Icon className="text-gold" />
                 <h3 className="mt-12 font-serif text-4xl font-bold leading-tight">
                   {title}
@@ -3260,8 +3269,9 @@ function App() {
       )}
 
       {!sectionHidden.enrollment && (
-        <section id="zapisy" className="bg-cream py-20 sm:py-28">
-          <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[.95fr_1.05fr] lg:px-8">
+        <section id="zapisy" className="relative overflow-hidden bg-cream py-20 sm:py-28">
+          <div className="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-l from-forest/12 to-transparent" />
+          <div className="relative mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[.95fr_1.05fr] lg:px-8">
             <motion.div {...fadeUp()} className="self-center">
               <p className="eyebrow">{t("enrollmentEyebrow")}</p>
               <h2 className="section-title">{t("enrollmentTitle")}</h2>
@@ -3271,7 +3281,7 @@ function App() {
                   <motion.div
                     key={label}
                     {...fadeUp(index * 0.05)}
-                    className="grid gap-3 bg-porcelain p-5 sm:grid-cols-[.7fr_.8fr_1.1fr] sm:items-center"
+                    className="premium-card grid gap-3 bg-porcelain p-5 sm:grid-cols-[.7fr_.8fr_1.1fr] sm:items-center"
                   >
                     <p className="text-sm font-black uppercase tracking-[0.16em] text-forest/55">
                       {label}
@@ -3289,7 +3299,7 @@ function App() {
             <motion.form
               {...fadeUp(0.08)}
               onSubmit={handleSignupSubmit}
-              className="rounded-[8px] border border-forest/10 bg-white/78 p-5 shadow-panel sm:p-7"
+              className="form-cinema rounded-[8px] border border-forest/10 bg-white/86 p-5 shadow-panel sm:p-7"
             >
               <h3 className="font-serif text-4xl font-bold leading-tight">
                 {t("signupTitle")}
@@ -3642,8 +3652,9 @@ function App() {
         </div>
       </section>
 
-      <section id="kontakt" className="relative bg-ink py-20 text-cream sm:py-28">
+      <section id="kontakt" className="relative overflow-hidden bg-ink py-20 text-cream sm:py-28">
         <div className="absolute inset-0 bg-grain opacity-60" />
+        <div className="section-aurora absolute inset-0 opacity-25" />
         <div className="relative mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_.9fr] lg:px-8">
           <motion.div {...fadeUp()}>
             <p className="eyebrow text-gold">{t("contactEyebrow")}</p>
@@ -3671,7 +3682,7 @@ function App() {
           <motion.form
             {...fadeUp(0.08)}
             onSubmit={handleContactSubmit}
-            className="rounded-[8px] border border-cream/10 bg-cream/[0.06] p-5 backdrop-blur-xl"
+            className="form-cinema rounded-[8px] border border-cream/10 bg-cream/[0.06] p-5 backdrop-blur-xl"
           >
             <label className="field">
               {t("contactNameLabel")}
